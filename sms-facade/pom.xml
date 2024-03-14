@@ -6,7 +6,8 @@
     <parent>
         <groupId>com.sms</groupId>
         <artifactId>sms-multi-provider</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>${sms.version}</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>sms-facade</artifactId>
