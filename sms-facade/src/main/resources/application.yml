@@ -1,0 +1,6 @@
+sms:
+  properties:
+    sms:
+      provider: aliyun # aliyun、ctyun
+    load:
+      balancer: random

@@ -5,4 +5,5 @@ package com.sms.api;
  */
 public interface SmsProvider {
     void send(String phoneNumber, String message);
+
 }
