@@ -18,18 +18,18 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>
-        <dependency>
-            <groupId>com.sms</groupId>
-            <artifactId>sms-loadbalancer</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.sms</groupId>
-            <artifactId>sms-service</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.sms</groupId>
-            <artifactId>sms-api</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.sms</groupId>-->
+<!--            <artifactId>sms-loadbalancer</artifactId>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>com.sms</groupId>-->
+<!--            <artifactId>sms-service</artifactId>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>com.sms</groupId>-->
+<!--            <artifactId>sms-api</artifactId>-->
+<!--        </dependency>-->
     </dependencies>
 
 </project>

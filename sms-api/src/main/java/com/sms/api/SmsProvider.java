@@ -4,6 +4,6 @@ package com.sms.api;
  * @author greysonchance
  */
 public interface SmsProvider {
-    void send(String phoneNumber, String message);
-
+    void sendSms(String phoneNumber, String message) throws SmsProviderException;
+    boolean isAvailable();
 }

@@ -98,6 +98,22 @@
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.sms</groupId>
+            <artifactId>sms-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.sms</groupId>
+            <artifactId>sms-service</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.sms</groupId>
+            <artifactId>sms-facade</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.sms</groupId>
+            <artifactId>sms-loadbalancer</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

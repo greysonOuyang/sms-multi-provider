@@ -1,6 +1,9 @@
 sms:
-  properties:
-    sms:
-      provider: aliyun # aliyun、ctyun
+  base:
+    provider:
+      selected: aliyun # aliyun、ctyun，可支持多选, 多选格式为 aliyun,ctyun
     load:
-      balancer: random
+      isEnabled: true # true 开启负载均衡 false 关闭，此时只根据以下配置中按优先级加载，如果A服务商不可用，则切换至B服务商
+      balancer: random # random roundRobin Weighted
+  providers:
+    aliyun:

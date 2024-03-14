@@ -6,15 +6,15 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component("roundRobin")
-public class RoundRobinLoadBalancer implements LoadBalancer {
+public class RoundRobinLoadBalancerStrategy implements LoadBalancerStrategy {
     private final List<SmsProvider> providers;
     private int index;
 
-    public RoundRobinLoadBalancer(List<SmsProvider> providers) {
+    public RoundRobinLoadBalancerStrategy(List<SmsProvider> providers) {
         this.providers = providers;
     }
 
-    public SmsProvider getProvider() {
+    public SmsProvider choose() {
         if (index >= providers.size()) {
             index = 0;
         }
