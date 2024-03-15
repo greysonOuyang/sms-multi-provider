@@ -17,7 +17,6 @@ public abstract class AbstractSmsProvider implements SmsProvider {
         if (!available) {
             throw new SmsProviderException("服务不可用。");
         }
-
         try {
             sendSmsInternal(phoneNumber, message);
         } catch (Exception ex) {
@@ -28,11 +27,6 @@ public abstract class AbstractSmsProvider implements SmsProvider {
     }
 
     protected abstract void sendSmsInternal(String phoneNumber, String message) throws Exception;
-
-    @Override
-    public boolean isAvailable() {
-        return available;
-    }
 
     protected void unavailable() {
         available = false;

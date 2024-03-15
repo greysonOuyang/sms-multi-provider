@@ -1,5 +1,6 @@
 package com.sms.service.provider.aliyun;
 
+import com.sms.service.AbstractSmsProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
