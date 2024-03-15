@@ -7,16 +7,14 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Random;
 
-@Component("random")
+@Component
 public class RandomLoadBalancerStrategy implements LoadBalancerStrategy {
-    private final List<SmsProvider> providers;
 
-    public RandomLoadBalancerStrategy(List<SmsProvider> providers) {
-        this.providers = providers;
-    }
+    private Random random = new Random();
 
-    public SmsProvider choose() {
-        int index = new Random().nextInt(providers.size());
-        return providers.get(index);
+    @Override
+    public SmsProvider choose(List<SmsProvider> providers) {
+        int pos = random.nextInt(providers.size());
+        return providers.get(pos);
     }
 }

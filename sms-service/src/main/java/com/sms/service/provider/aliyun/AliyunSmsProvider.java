@@ -23,5 +23,10 @@ public class AliyunSmsProvider extends AbstractSmsProvider {
     public boolean isHealthy() {
         return true;
     }
+
+    @Override
+    public String getName() {
+        return "aliyun";
+    }
 }
 

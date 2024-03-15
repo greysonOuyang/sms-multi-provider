@@ -1,5 +1,6 @@
 package com.sms.load.balance;
 
+import com.sms.api.LoadBalancerStrategy;
 import com.sms.api.SmsProvider;
 import com.sms.api.UnavailableHandler;
 import lombok.extern.slf4j.Slf4j;
@@ -36,13 +37,23 @@ public class LoadBalancerManager implements UnavailableHandler {
     @Value("${sms.base.provider.recovery.time:5}")
     private int providerFailureRecovery;
 
-
+    @Autowired
+    private LoadBalancerStrategy loadBalancerStrategy;
 
     @Autowired
     private List<SmsProvider> allProviders;
 
+    /**
+     * 所有服务商集合
+     */
     private List<SmsProvider> availableProviders;
+    /**
+     * 可用服务商集合
+     */
     private Map<SmsProvider, Boolean> availabilityMap;
+    /**
+     * 失败计数
+     */
     private Map<SmsProvider, Integer> failCounter;
     private int currentProviderIndex = 0;
 
@@ -69,10 +80,11 @@ public class LoadBalancerManager implements UnavailableHandler {
         }
 
         if (!availableProviders.isEmpty()) {
-            SmsProvider provider = availableProviders.get(currentProviderIndex);
+            SmsProvider provider = loadBalancerStrategy.choose(availableProviders);
             if (provider.isHealthy()) {
                 return provider;
             } else {
+                // 服务不可用
                 handleFailure(provider);
                 return getProvider();
             }

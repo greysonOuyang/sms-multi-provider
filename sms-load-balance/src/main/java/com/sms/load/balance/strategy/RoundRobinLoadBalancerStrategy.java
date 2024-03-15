@@ -5,20 +5,16 @@ import com.sms.api.SmsProvider;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Component("roundRobin")
 public class RoundRobinLoadBalancerStrategy implements LoadBalancerStrategy {
-    private final List<SmsProvider> providers;
-    private int index;
 
-    public RoundRobinLoadBalancerStrategy(List<SmsProvider> providers) {
-        this.providers = providers;
-    }
+    private final AtomicInteger position = new AtomicInteger();
 
-    public SmsProvider choose() {
-        if (index >= providers.size()) {
-            index = 0;
-        }
-        return providers.get(index++);
+    @Override
+    public SmsProvider choose(List<SmsProvider> providers) {
+        int pos = Math.abs(position.getAndIncrement());
+        return providers.get(pos % providers.size());
     }
 }

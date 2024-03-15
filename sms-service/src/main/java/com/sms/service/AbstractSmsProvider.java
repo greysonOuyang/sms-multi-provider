@@ -10,6 +10,9 @@ public abstract class AbstractSmsProvider implements SmsProvider {
     @Autowired
     private UnavailableHandler unavailableHandler;
 
+    /**
+     * 服务是否可用
+     */
     private boolean available = true;
 
     @Override

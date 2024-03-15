@@ -23,4 +23,9 @@ public class CtyunSmsProvider extends AbstractSmsProvider {
     public boolean isHealthy() {
         return true;
     }
+
+    @Override
+    public String getName() {
+        return "ctyun";
+    }
 }
