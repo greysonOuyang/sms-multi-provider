@@ -1,5 +1,8 @@
 package com.sms.api;
 
+/**
+ * 重试机制
+ */
 public class RetryableSmsProvider implements SmsProvider {
     private SmsProvider delegate;
     private int maxAttempts;
@@ -22,5 +25,10 @@ public class RetryableSmsProvider implements SmsProvider {
             }
         }
         throw exception;
+    }
+
+    @Override
+    public boolean isAvailable() {
+        return false;
     }
 }

@@ -1,6 +1,7 @@
-package com.sms.loadbalance;
+package com.sms.load.balance;
 
 import com.sms.api.SmsProvider;
+import com.sms.load.balance.strategy.LoadBalancerStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

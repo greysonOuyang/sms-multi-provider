@@ -7,3 +7,7 @@ sms:
       balancer: random # random roundRobin Weighted
   providers:
     aliyun:
+
+kafka:
+  topic:
+  bootstrapAddress:

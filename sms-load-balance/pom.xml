@@ -10,7 +10,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>sms-loadbalancer</artifactId>
+    <artifactId>sms-load-balance</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -18,10 +18,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>
-<!--        <dependency>-->
-<!--            <groupId>com.sms</groupId>-->
-<!--            <artifactId>sms-api</artifactId>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.sms</groupId>
+            <artifactId>sms-api</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

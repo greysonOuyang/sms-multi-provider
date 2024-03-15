@@ -5,6 +5,8 @@
     <file url="file://$PROJECT_DIR$/sms-api/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sms-facade/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sms-facade/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sms-load-balance/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sms-load-balance/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sms-loadbalancer/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sms-loadbalancer/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sms-service/src/main/java" charset="UTF-8" />
