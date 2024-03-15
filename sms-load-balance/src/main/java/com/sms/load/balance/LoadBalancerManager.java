@@ -58,7 +58,7 @@ public class LoadBalancerManager implements UnavailableHandler {
     private Map<SmsProvider, Integer> failCounter;
 
     // 创建一个调度线程池
-    private ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
     @Override
     public void handleUnavailable(SmsProvider provider) {

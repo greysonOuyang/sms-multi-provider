@@ -14,6 +14,7 @@
         <module>sms-service</module>
         <module>sms-load-balance</module>
         <module>sms-facade</module>
+        <module>sms-monitor</module>
     </modules>
 
     <properties>

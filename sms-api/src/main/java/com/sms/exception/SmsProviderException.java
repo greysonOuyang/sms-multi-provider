@@ -1,7 +1,7 @@
 package com.sms.exception;
 
 /**
- * 异常
+ * 发送短信异常
  * <p>
  * Author: greyson
  * Email: ouyangguanling@ssc-hn.com
