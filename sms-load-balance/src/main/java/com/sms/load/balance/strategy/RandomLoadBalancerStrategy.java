@@ -10,7 +10,7 @@ import java.util.Random;
 @Component
 public class RandomLoadBalancerStrategy implements LoadBalancerStrategy {
 
-    private Random random = new Random();
+    private final Random random = new Random();
 
     @Override
     public SmsProvider choose(List<SmsProvider> providers) {

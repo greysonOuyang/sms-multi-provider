@@ -3,6 +3,7 @@ package com.sms.load.balance;
 import com.sms.api.LoadBalancerStrategy;
 import com.sms.api.SmsProvider;
 import com.sms.api.UnavailableHandler;
+import com.sms.service.config.ProviderConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,21 +42,20 @@ public class LoadBalancerManager implements UnavailableHandler {
     private LoadBalancerStrategy loadBalancerStrategy;
 
     @Autowired
-    private List<SmsProvider> allProviders;
+    private ProviderConfig providerConfig;
 
     /**
-     * 所有服务商集合
+     * 可用服务商
      */
     private List<SmsProvider> availableProviders;
     /**
-     * 可用服务商集合
+     * 服务商 可用标记
      */
     private Map<SmsProvider, Boolean> availabilityMap;
     /**
      * 失败计数
      */
     private Map<SmsProvider, Integer> failCounter;
-    private int currentProviderIndex = 0;
 
     // 创建一个调度线程池
     private ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
@@ -69,14 +69,14 @@ public class LoadBalancerManager implements UnavailableHandler {
 
     @PostConstruct
     public void init() {
-        availableProviders = new ArrayList<>(allProviders);
-        availabilityMap = allProviders.stream().collect(Collectors.toMap(Function.identity(), provider -> true));
-        failCounter = allProviders.stream().collect(Collectors.toMap(Function.identity(), provider -> 0));
+        availableProviders = providerConfig.getAllProviders();
+        availabilityMap = providerConfig.getAllProviders().stream().collect(Collectors.toMap(Function.identity(), provider -> true));
+        failCounter = providerConfig.getAllProviders().stream().collect(Collectors.toMap(Function.identity(), provider -> 0));
     }
 
     public SmsProvider getProvider() {
         if (!loadBalanceIsEnabled) {
-            return allProviders.get(currentProviderIndex);
+            return providerConfig.getFirstProvider();
         }
 
         if (!availableProviders.isEmpty()) {
@@ -108,7 +108,7 @@ public class LoadBalancerManager implements UnavailableHandler {
 
     private void resetProviders() {
         failCounter.replaceAll((k, v) -> 0);
-        availableProviders = new ArrayList<>(allProviders);
+        availableProviders = new ArrayList<>(providerConfig.getAllProviders());
         availabilityMap.replaceAll((k, v) -> true);
     }
 
