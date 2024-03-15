@@ -7,6 +7,8 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -21,10 +23,16 @@ public class RetryHandler {
     @Value("${sms.retry.enabled}")
     private boolean retryEnabled;
 
+    @Value("${sms.retry.maxRetryTimes}")
+    private int maxRetryTimes;
+
+    @Value("${sms.retry.fixedDelay}")
+    private long fixedDelay;
+
     @Async
     public void execute(SmsRequest smsRequest) {
         if(retryEnabled){
-            // 需要重试
+            // 快速重试
             long id = Thread.currentThread().getId();
             int attempts = 0;
             while (attempts++ < limit) {
@@ -45,14 +53,32 @@ public class RetryHandler {
         }
     }
 
-    @Scheduled(fixedRateString = "${sms.retry.interval}")
+    @Scheduled(fixedDelayString = "${sms.retry.fixedDelay}")
     public void retryFailed() {
-        retryMap.forEach((id, smsRequest) -> {
+        // 这个map用来记录每一个任务的重试次数
+        Map<Long, Integer> retryCountMap = new HashMap<>();
+
+        Iterator<Map.Entry<Long, SmsRequest>> iterator = retryMap.entrySet().iterator();
+        while(iterator.hasNext()){
+            Map.Entry<Long, SmsRequest> entry = iterator.next();
+            long threadId = entry.getKey();
+            SmsRequest request = entry.getValue();
+
+            int retryCount = retryCountMap.getOrDefault(threadId, 0);
+
             try {
-                smsRequest.getChosenProvider().sendSms(smsRequest.getPhoneNumber(), smsRequest.getMessage());
-                retryMap.remove(id);
-            } catch (Exception ignored) {
+                request.getChosenProvider().sendSms(request.getPhoneNumber(), request.getMessage());
+                //如果发送成功，从重试列表中删除
+                iterator.remove();
+            } catch (Exception ignore){
+                // 这里增加重试计数，并检查是否超过最大重试次数
+                retryCount++;
+                retryCountMap.put(threadId, retryCount);
+                if (retryCount >= maxRetryTimes) {
+                    // 重试次数超过上限，把这个任务从重试列表中删除
+                    iterator.remove();
+                }
             }
-        });
+        }
     }
 }

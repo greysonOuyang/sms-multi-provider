@@ -1,7 +1,7 @@
 package com.sms.facade;
 
 import com.sms.api.SmsProvider;
-import com.sms.api.SmsProviderException;
+import com.sms.exception.SmsProviderException;
 import com.sms.facade.domain.SmsRequest;
 import com.sms.load.balance.LoadBalancerManager;
 import org.springframework.beans.factory.annotation.Autowired;

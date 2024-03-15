@@ -22,9 +22,10 @@
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring.boot.version>3.2.0</spring.boot.version>
-        <hutool.version>5.8.24</hutool.version>
+        <hutool.version>5.8.25</hutool.version>
         <kafka.version>3.1.1</kafka.version>
         <lombok.version>1.18.30</lombok.version>
+        <logback.version>1.5.3</logback.version>
 
     </properties>
 
@@ -33,14 +34,14 @@
             <!-- SpringBoot的依赖配置-->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring.boot.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter</artifactId>
                 <version>${spring.boot.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>ch.qos.logback</groupId>
+                        <artifactId>logback-classic</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.projectlombok</groupId>
@@ -51,10 +52,8 @@
             <!-- hutool 的依赖配置-->
             <dependency>
                 <groupId>cn.hutool</groupId>
-                <artifactId>hutool-bom</artifactId>
+                <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>com.sms</groupId>
@@ -82,35 +81,13 @@
                 <artifactId>spring-kafka</artifactId>
                 <version>${kafka.version}</version>
             </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback.version}</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>
-    <dependencies>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.sms</groupId>
-            <artifactId>sms-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.sms</groupId>
-            <artifactId>sms-service</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.sms</groupId>
-            <artifactId>sms-facade</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.sms</groupId>
-            <artifactId>sms-load-balance</artifactId>
-        </dependency>
-    </dependencies>
 
 </project>

@@ -1,5 +1,6 @@
 package com.sms.load.balance.strategy;
 
+import com.sms.api.LoadBalancerStrategy;
 import com.sms.api.SmsProvider;
 import org.springframework.stereotype.Component;
 

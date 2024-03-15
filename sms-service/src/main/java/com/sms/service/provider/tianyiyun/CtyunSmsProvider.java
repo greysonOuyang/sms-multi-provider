@@ -1,7 +1,5 @@
 package com.sms.service.provider.tianyiyun;
 
-import com.sms.api.AbstractSmsProvider;
-import com.sms.api.SmsProvider;
 import com.sms.service.config.SmsProviderProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,5 +16,10 @@ public class CtyunSmsProvider extends AbstractSmsProvider {
     @Override
     protected void sendSmsInternal(String phoneNumber, String message) throws Exception {
 
+    }
+
+    @Override
+    public boolean isHealthy() {
+        return true;
     }
 }

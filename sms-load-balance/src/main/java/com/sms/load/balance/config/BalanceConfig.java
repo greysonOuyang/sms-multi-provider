@@ -1,6 +1,5 @@
-package com.sms.facade;
+package com.sms.load.balance.config;
 
-import com.sms.api.SmsProvider;
 import com.sms.api.LoadBalancerStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,22 +10,17 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 @EnableAsync
 @EnableScheduling
 @SpringBootApplication
 @Configuration
-public class SmsApplication {
+public class BalanceConfig {
    
-
-
     @Value("${load.balancer}")
     private String balance;
 
-
+    @Autowired
+    private ApplicationContext context;
 
     @Bean
     public LoadBalancerStrategy loadBalancer() {

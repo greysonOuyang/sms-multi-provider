@@ -1,4 +1,4 @@
-package com.sms.api;
+package com.sms.exception;
 
 /**
  * 异常

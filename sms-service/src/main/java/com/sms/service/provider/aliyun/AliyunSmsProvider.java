@@ -1,9 +1,5 @@
 package com.sms.service.provider.aliyun;
 
-import com.sms.api.AbstractSmsProvider;
-import com.sms.api.SmsProvider;
-import com.sms.service.config.SmsProviderProperties;
-import com.sms.service.provider.tianyiyun.CtyunSmsProviderProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +16,11 @@ public class AliyunSmsProvider extends AbstractSmsProvider {
     @Override
     protected void sendSmsInternal(String phoneNumber, String message) throws Exception {
 
+    }
+
+    @Override
+    public boolean isHealthy() {
+        return true;
     }
 }
 
