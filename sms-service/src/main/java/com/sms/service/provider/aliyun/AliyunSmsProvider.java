@@ -1,13 +1,32 @@
 package com.sms.service.provider.aliyun;
 
-import com.sms.api.SmsProvider;
+import com.sms.service.AbstractSmsProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service("aliyun")
-public class AliyunSmsProvider implements SmsProvider {
+@Service("aliyunSmsProvider")
+public class AliyunSmsProvider extends AbstractSmsProvider {
+
+    private final AliyunSmsProviderProperties properties;
+
+    @Autowired
+    public AliyunSmsProvider(AliyunSmsProviderProperties properties) {
+        this.properties = properties;
+    }
+
     @Override
-    public void send(String phoneNumber, String message){
-        // ... 
+    protected void sendSmsInternal(String phoneNumber, String message) throws Exception {
+
+    }
+
+    @Override
+    public boolean isHealthy() {
+        return true;
+    }
+
+    @Override
+    public String getName() {
+        return "aliyun";
     }
 }
 

@@ -12,8 +12,9 @@
     <modules>
         <module>sms-api</module>
         <module>sms-service</module>
-        <module>sms-loadbalancer</module>
+        <module>sms-load-balance</module>
         <module>sms-facade</module>
+        <module>sms-monitor</module>
     </modules>
 
     <properties>
@@ -21,8 +22,11 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring.boot.version>2.7.18</spring.boot.version>
-        <hutool.version>5.8.24</hutool.version>
+        <spring.boot.version>3.2.0</spring.boot.version>
+        <hutool.version>5.8.25</hutool.version>
+        <kafka.version>3.1.1</kafka.version>
+        <lombok.version>1.18.30</lombok.version>
+        <logback.version>1.5.3</logback.version>
 
     </properties>
 
@@ -31,35 +35,26 @@
             <!-- SpringBoot的依赖配置-->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
+                <artifactId>spring-boot-starter</artifactId>
                 <version>${spring.boot.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
                 <exclusions>
                     <exclusion>
-                        <groupId>jakarta.activation</groupId>
-                        <artifactId>jakarta.activation-api</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>jakarta.mail</groupId>
-                        <artifactId>jakarta.mail-api</artifactId>
+                        <groupId>ch.qos.logback</groupId>
+                        <artifactId>logback-classic</artifactId>
                     </exclusion>
                 </exclusions>
             </dependency>
-
             <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter</artifactId>
-                <version>${spring.boot.version}</version>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
             </dependency>
 
             <!-- hutool 的依赖配置-->
             <dependency>
                 <groupId>cn.hutool</groupId>
-                <artifactId>hutool-bom</artifactId>
+                <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>com.sms</groupId>
@@ -73,7 +68,7 @@
             </dependency>
             <dependency>
                 <groupId>com.sms</groupId>
-                <artifactId>sms-loadbalancer</artifactId>
+                <artifactId>sms-load-balance</artifactId>
                 <version>${sms.version}</version>
             </dependency>
             <dependency>
@@ -81,23 +76,19 @@
                 <artifactId>sms-service</artifactId>
                 <version>${sms.version}</version>
             </dependency>
-
+            <!-- Spring Kafka -->
+            <dependency>
+                <groupId>org.springframework.kafka</groupId>
+                <artifactId>spring-kafka</artifactId>
+                <version>${kafka.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback.version}</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>
-
-    <dependencies>
-
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
-
-    </dependencies>
 
 </project>
