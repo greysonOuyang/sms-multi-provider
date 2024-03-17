@@ -1,0 +1,22 @@
+{
+  "aliyun": {
+    "notification": {
+      "templateId": "1001",
+      "content": "通知信息：${message}"
+    },
+    "verification": {
+      "templateId": "1002",
+      "content": "您的验证码是${code}, 有效期为${expiry}分钟。"
+    }
+  },
+  "ctyun": {
+    "notification": {
+      "templateId": "2001",
+      "content": "【CTYun】您的通知信息是：${message}"
+    },
+    "verification": {
+      "templateId": "2002",
+      "content": "【CTYun】您正在进行手机验证，验证码为${code}，请于${expiry}分钟内正确输入。"
+    }
+  }
+}
