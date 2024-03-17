@@ -4,7 +4,8 @@
     <parent>
         <groupId>com.sms</groupId>
         <artifactId>sms-multi-provider</artifactId>
-        <version>1.0</version>
+        <version>${sms.version}</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <groupId>com.sms.monitor</groupId>
     <artifactId>sms-monitor</artifactId>
@@ -17,6 +18,22 @@
             <artifactId>junit</artifactId>
             <version>3.8.1</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
         </dependency>
     </dependencies>
 </project>

@@ -1,6 +1,7 @@
 package com.sms.load.balance.config;
 
 import com.sms.api.LoadBalancerStrategy;
+import com.sms.load.balance.strategy.LoadBalancerRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,8 +23,12 @@ public class BalanceConfig {
     @Autowired
     private ApplicationContext context;
 
+    @Autowired
+    private LoadBalancerRegistry registry;
+
     @Bean
     public LoadBalancerStrategy loadBalancer() {
-        return (LoadBalancerStrategy) context.getBean(balance);
+        LoadBalancerStrategy strategy = registry.getStrategy(balance);
+        return strategy != null ? strategy : (LoadBalancerStrategy) context.getBean(balance);
     }
 }
