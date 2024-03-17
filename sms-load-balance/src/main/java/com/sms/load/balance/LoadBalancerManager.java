@@ -3,7 +3,7 @@ package com.sms.load.balance;
 import com.sms.api.LoadBalancerStrategy;
 import com.sms.api.SmsProvider;
 import com.sms.api.UnavailableHandler;
-import com.sms.service.config.ProviderConfig;
+import com.sms.service.provider.config.ProviderConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -72,6 +72,13 @@ public class LoadBalancerManager implements UnavailableHandler {
         availableProviders = providerConfig.getAllProviders();
         availabilityMap = providerConfig.getAllProviders().stream().collect(Collectors.toMap(Function.identity(), provider -> true));
         failCounter = providerConfig.getAllProviders().stream().collect(Collectors.toMap(Function.identity(), provider -> 0));
+    }
+
+    public SmsProvider currentProvider() {
+        if (getProvider() == null) {
+            throw new RuntimeException("Can't get a sms provider, please check config or make sure provider is available");
+        }
+        return getProvider();
     }
 
     public SmsProvider getProvider() {

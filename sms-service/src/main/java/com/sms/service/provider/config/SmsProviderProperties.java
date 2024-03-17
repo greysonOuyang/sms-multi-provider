@@ -1,4 +1,4 @@
-package com.sms.service.config;
+package com.sms.service.provider.config;
 
 public interface SmsProviderProperties {
     String getApiUrl();

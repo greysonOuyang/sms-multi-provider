@@ -1,7 +1,7 @@
 package com.sms.service.provider.tianyiyun;
 
 import com.sms.service.AbstractSmsProvider;
-import com.sms.service.config.SmsProviderProperties;
+import com.sms.service.provider.config.SmsProviderProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

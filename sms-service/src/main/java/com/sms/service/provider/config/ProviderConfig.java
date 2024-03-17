@@ -1,4 +1,4 @@
-package com.sms.service.config;
+package com.sms.service.provider.config;
 
 import com.sms.api.SmsProvider;
 import io.micrometer.common.util.StringUtils;

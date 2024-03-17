@@ -1,6 +1,6 @@
 package com.sms.service.provider.tianyiyun;
 
-import com.sms.service.config.SmsProviderProperties;
+import com.sms.service.provider.config.SmsProviderProperties;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;

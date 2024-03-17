@@ -1,4 +1,4 @@
-package com.sms.service.config;
+package com.sms.service.templates.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
