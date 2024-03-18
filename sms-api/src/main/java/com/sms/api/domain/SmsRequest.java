@@ -16,7 +16,7 @@ public class SmsRequest {
     /**
      * 模板code
      */
-    private String reqCode;
+    private String templateCode;
     /**
      * 手机号
      */
@@ -44,8 +44,6 @@ public class SmsRequest {
      */
     private String uniqueId;
 
-    private SmsProvider chosenProvider;
-
     /**
      * 发送短信用不上，用于记录在历史表中
      */
@@ -59,4 +57,8 @@ public class SmsRequest {
      * 模板参数 占位形式
      */
     private String params;
+    /**
+     * 服务商
+     */
+    private SmsProvider chosenProvider;
 }

@@ -4,17 +4,15 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.sms.api.RequestHelperService;
-import com.sms.api.SmsTemplateService;
 import com.sms.api.TemplateConfiguration;
-import com.sms.api.TemplateMessageBuilder;
 import com.sms.api.domain.BatchSmsRequest;
+import com.sms.api.domain.SmsRequest;
 import com.sms.api.domain.SmsTemplateEntity;
 import com.sms.api.exception.SmsCommonException;
 import com.sms.facade.enums.ParamTypeEnum;
 import com.sms.load.balance.LoadBalancerManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedHashMap;
@@ -41,23 +39,23 @@ public class RequestHelperServiceImpl implements RequestHelperService {
 
 
     @Override
-    public BatchSmsRequest.SmsTarget generateParameter(String businessCode, List<String> paramValues, String phoneNumber, String name) throws SmsCommonException {
-        BatchSmsRequest.SmsTarget smsTarget = new BatchSmsRequest.SmsTarget();
-        smsTarget.setUniqueId(IdUtil.fastSimpleUUID());
-        smsTarget.setPhoneNumber(phoneNumber);
-        smsTarget.setReceiverName(name);
+    public SmsRequest generateParameter(String businessCode, List<String> paramValues, String phoneNumber, String name) throws SmsCommonException {
+
+        SmsRequest smsRequest = SmsRequest.builder().uniqueId(IdUtil.fastSimpleUUID())
+                .phoneNumber(phoneNumber)
+                .receiverName(name).build();
 
         SmsTemplateEntity template = templateConfiguration.getTemplate(businessCode, loadBalancerManager.currentProviderName());
         // TODO 参数形式以及组合待优化
         if (template.getParamType().equals(ParamTypeEnum.MAP.getType())) {
-            smsTarget.setTemplateParams(generateMap(template.getParameters(), paramValues));
+            smsRequest.setTemplateParams(generateMap(template.getParameters(), paramValues));
         } else {
-            smsTarget.setParams(String.join(",", paramValues));
+            smsRequest.setParams(String.join(",", paramValues));
         }
-        if (CollectionUtil.isEmpty(smsTarget.getTemplateParams()) && StringUtils.isEmpty(smsTarget.getParams())) {
+        if (CollectionUtil.isEmpty(smsRequest.getTemplateParams()) && StringUtils.isEmpty(smsRequest.getParams())) {
             throw new SmsCommonException("没有成功设置模板参数，请检查");
         }
-        return smsTarget;
+        return smsRequest;
     }
 
 

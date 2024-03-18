@@ -59,12 +59,11 @@ public class SmsFacade {
      */
     public void sendByTemplateMulti(BatchSmsRequest batchSmsRequest) throws SmsSendException, SmsCommonException {
         if (enableQueue) {
-            // TODO 批量发送的话在这里进行处理然后发送到队列执行
             // 启用队列发送
-            kafkaSmsProducer.handlerTemplateSms(batchSmsRequest);
+            kafkaSmsProducer.handlerTemplateSmsMulti(batchSmsRequest);
         } else {
             // 直接发送
-            smsTrulySender.execute(batchSmsRequest);
+            smsTrulySender.executeMulti(batchSmsRequest);
         }
     }
 }

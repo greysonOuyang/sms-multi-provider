@@ -6,7 +6,6 @@ import com.sms.api.domain.SmsRequest;
 import com.sms.api.domain.SmsResponse;
 import com.sms.api.exception.SmsSendException;
 import com.sms.load.balance.LoadBalancerManager;
-import com.sms.service.AbstractSmsProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
@@ -43,30 +42,42 @@ public class SmsTrulySender {
     @Autowired
     private LoadBalancerManager loadBalancerManager;
 
+    @Async
+    public void executeMulti(BatchSmsRequest smsRequest)  {
+        smsRequest.getTargets().forEach(target -> {
+            target.setScheduleTime(smsRequest.getScheduleTime());
+            target.setTemplateCode(smsRequest.getTemplateCode());
+            target.setSignName(smsRequest.getSignName());
+            try {
+                execute(target);
+            } catch (SmsSendException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
 
     @Async
     public void execute(SmsRequest smsRequest) throws SmsSendException {
         // 获取服务提供商
         SmsProvider chosenProvider = loadBalancerManager.currentProvider();
-        if (chosenProvider == null) {
-            throw new SmsSendException("All sms providers are unavailable");
-        }
         if(retryEnabled){
             // 快速重试
             long id = Thread.currentThread().getId();
             int attempts = 0;
             while (attempts++ < limit) {
                 try {
-                    chosenProvider.sendSms(smsRequest);
+                    // TODO 处理历史记录等
+                    CompletableFuture<SmsResponse> smsResponseCompletableFuture = chosenProvider.sendSms(smsRequest);
                     return;
                 } catch (Exception e) {
+                    loadBalancerManager.failInc(chosenProvider);
                     retryMap.put(id, smsRequest);
                 }
             }
         }else{
             // 不需要重试
             try{
-                smsRequest.getChosenProvider().sendSms(smsRequest);
+                chosenProvider.sendSms(smsRequest);
             }catch (Exception e){
                 // 处理发送失败的情况，比如记录到日志
             }
@@ -87,7 +98,8 @@ public class SmsTrulySender {
             int retryCount = retryCountMap.getOrDefault(threadId, 0);
 
             try {
-                request.getChosenProvider().sendSms(request);
+                // 重新选择服务商来发送
+                loadBalancerManager.currentProvider().sendSms(request);
                 //如果发送成功，从重试列表中删除
                 iterator.remove();
             } catch (Exception ignore){

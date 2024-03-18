@@ -4,6 +4,7 @@ package com.sms.api;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.sms.api.domain.BatchSmsRequest;
 import com.sms.api.domain.SmsHistoryEntity;
+import com.sms.api.domain.SmsResponse;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;

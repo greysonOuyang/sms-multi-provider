@@ -2,6 +2,7 @@ package com.sms.api;
 
 
 import com.sms.api.domain.BatchSmsRequest;
+import com.sms.api.domain.SmsRequest;
 import com.sms.api.exception.SmsCommonException;
 
 import java.util.List;
@@ -23,5 +24,5 @@ public interface RequestHelperService {
      * @param paramValues 参数对应的值
      * @return
      */
-    BatchSmsRequest.SmsTarget generateParameter(String businessCode, List<String> paramValues, String phoneNumber, String name) throws SmsCommonException;
+    SmsRequest generateParameter(String businessCode, List<String> paramValues, String phoneNumber, String name) throws SmsCommonException;
 }

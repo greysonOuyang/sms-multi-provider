@@ -20,16 +20,18 @@ public class KafkaSmsProducer {
 
     @Autowired
     private KafkaTemplate<String, SmsRequest> kafkaTemplate;
+    private KafkaTemplate<String, BatchSmsRequest> kafkaTemplate2;
 
-    @Value("${kafka.topic}")
-    private String topic;
 
     /**
      * 批量根据模板发送短信
      * @param smsTarget
      */
     public void handlerTemplateSms(SmsRequest smsTarget) {
-        kafkaTemplate.send(topic, smsTarget);
+        kafkaTemplate.send("kafka.topic.single", smsTarget);
     }
 
+    public void handlerTemplateSmsMulti(BatchSmsRequest batchSmsRequest) {
+        kafkaTemplate2.send("kafka.topic.multi", batchSmsRequest);
+    }
 }

@@ -15,7 +15,7 @@ public class AliyunSmsRequestTranslator implements SmsRequestTranslator {
         return SendSmsRequest.builder()
                 .phoneNumbers(smsRequest.getPhoneNumber())
                 .signName(smsRequest.getSignName())
-                .templateCode(smsRequest.getReqCode())
+                .templateCode(smsRequest.getTemplateCode())
                 .templateParam(smsRequest.getParams())
                 .build();
     }

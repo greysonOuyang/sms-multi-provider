@@ -4,6 +4,7 @@ import com.aliyun.auth.credentials.Credential;
 import com.aliyun.auth.credentials.provider.StaticCredentialProvider;
 import com.aliyun.sdk.service.dysmsapi20170525.AsyncClient;
 import com.aliyun.sdk.service.dysmsapi20170525.models.SendSmsRequest;
+import com.sms.api.AbstractSmsProvider;
 import com.sms.api.SmsProvider;
 import com.sms.api.SmsRequestTranslator;
 import com.sms.api.SmsResponseTranslator;
@@ -27,7 +28,7 @@ import java.util.concurrent.CompletableFuture;
  */
 @Slf4j
 @Service
-public class AliTrulySender implements SmsProvider {
+public class AliTrulySender extends AbstractSmsProvider {
     @Autowired
     private AliyunSmsProviderProperties smsConfig;
 

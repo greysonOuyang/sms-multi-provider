@@ -27,11 +27,12 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Service
-public class LoadBalancerManager implements UnavailableHandler {
+public class LoadBalancerManager {
 
     @Value("${load.balance.isEnabled}")
     private boolean loadBalanceIsEnabled;
 
+    // TODO 需要有策略，例如多少分钟内失效多少次则不可用
     @Value("${sms.base.provider.failure.times:5}")
     private int providerFailureTimes;
 
@@ -60,11 +61,11 @@ public class LoadBalancerManager implements UnavailableHandler {
     // 创建一个调度线程池
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
-    @Override
-    public void handleUnavailable(SmsProvider provider) {
-        // 将服务商标记为不可用
-        availabilityMap.put(provider, false);
-        availableProviders.remove(provider);
+
+    public void failInc(SmsProvider provider) {
+        // 失败计数加一
+        int failCount = failCounter.get(provider) + 1;
+        failCounter.put(provider, failCount);
     }
 
     @PostConstruct
@@ -95,8 +96,8 @@ public class LoadBalancerManager implements UnavailableHandler {
             if (provider.isHealthy()) {
                 return provider;
             } else {
-                // 服务不可用
-                handleFailure(provider);
+                // 服务不可用 TODO
+                failInc(provider);
                 return getProvider();
             }
         } else {
@@ -105,11 +106,12 @@ public class LoadBalancerManager implements UnavailableHandler {
         }
     }
 
+    // TODO 对服务商进行发送失败统计 超过用户设置的阈值则置为失效，配置例如：time: 1s, count:10, 表示当1s内超过了10次失败，则该服务商不可用
+    //  考虑下该怎么实现
     private void handleFailure(SmsProvider provider) {
-        int failCount = failCounter.get(provider) + 1;
-        failCounter.put(provider, failCount);
-
+        int failCount = failCounter.get(provider);
         if (failCount >= providerFailureTimes) {
+            provider.setAvailable(false);
             availableProviders.remove(provider);
             availabilityMap.put(provider, false);
             // 将此服务商放入定时器，5分钟后回复健康
@@ -117,6 +119,9 @@ public class LoadBalancerManager implements UnavailableHandler {
         }
     }
 
+    /**
+     * 如果没有可用的服务，那就全部恢复成可用状态
+     */
     private void resetProviders() {
         failCounter.replaceAll((k, v) -> 0);
         availableProviders = new ArrayList<>(providerConfig.getAllProviders());
