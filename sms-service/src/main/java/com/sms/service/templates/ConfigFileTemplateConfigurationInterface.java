@@ -1,6 +1,6 @@
 package com.sms.service.templates;
 
-import com.sms.api.MessageTemplate;
+import com.sms.api.domain.MessageTemplate;
 import com.sms.api.TemplateConfigurationInterface;
 import com.sms.service.templates.domain.Configuration;
 import com.sms.service.templates.domain.ProviderTemplate;
@@ -19,7 +19,7 @@ import com.alibaba.fastjson.JSON;
 @Service
 public class ConfigFileTemplateConfigurationInterface implements TemplateConfigurationInterface {
 
-    @Value("${template.file}")
+    @Value("${template.file:classPath:resources/templates/templates.json}")
     private String templateFilePath; // 从配置文件中读取
 
     private volatile Configuration config = new Configuration(); // 当前加载的配置
@@ -32,6 +32,7 @@ public class ConfigFileTemplateConfigurationInterface implements TemplateConfigu
 
     private synchronized void loadTemplatesFromFile() {
         try {
+            // TODO 校验文件路径是否存在
             String content = new String(Files.readAllBytes(Paths.get(templateFilePath)));
             Configuration newConfig = JSON.parseObject(content, Configuration.class);
             if (!config.getVersion().equals(newConfig.getVersion())) {

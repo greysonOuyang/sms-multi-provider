@@ -1,11 +1,8 @@
 package com.sms.service.templates;
 
-import com.sms.api.MessageTemplate;
+import com.sms.api.domain.MessageTemplate;
 import com.sms.api.TemplateConfigurationInterface;
-import com.sms.service.templates.config.MessageConfiguration;
 import org.springframework.stereotype.Service;
-
-import javax.sql.DataSource;
 
 @Service
 public class DatabaseTemplateConfigurationInterface implements TemplateConfigurationInterface {

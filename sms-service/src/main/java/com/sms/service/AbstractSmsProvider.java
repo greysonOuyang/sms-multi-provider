@@ -2,7 +2,7 @@ package com.sms.service;
 
 import com.sms.api.SmsProvider;
 import com.sms.api.UnavailableHandler;
-import com.sms.exception.SmsProviderException;
+import com.sms.api.exception.SmsSendException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class AbstractSmsProvider implements SmsProvider {
@@ -16,16 +16,16 @@ public abstract class AbstractSmsProvider implements SmsProvider {
     private boolean available = true;
 
     @Override
-    public void sendSms(String phoneNumber, String message) throws SmsProviderException {
+    public void sendSms(String phoneNumber, String message) throws SmsSendException {
         if (!available) {
-            throw new SmsProviderException("服务不可用。");
+            throw new SmsSendException("服务不可用。");
         }
         try {
             sendSmsInternal(phoneNumber, message);
         } catch (Exception ex) {
             // 出现异常，标记此服务主为不可用，并通知UnavailableHandler
             unavailable();
-            throw new SmsProviderException("短信发送失败，服务被标记为不可用。", ex);
+            throw new SmsSendException("短信发送失败，服务被标记为不可用。", ex);
         }
     }
 

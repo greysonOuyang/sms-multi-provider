@@ -1,25 +1,30 @@
 package com.sms.service.provider.aliyun;
 
 import com.sms.service.provider.config.SmsProviderProperties;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
+@Data
 @Configuration
 @PropertySource("classpath:aliyun.properties")
 public class AliyunSmsProviderProperties implements SmsProviderProperties {
-    @Value("${accessKey}")
-    private String accessKey;
+    @Value("${accessKeyId}")
+    private String accessKeyId;
 
-    @Value("${secretKey}")
-    private String secretKey;
+    @Value("${accessKeySecret}")
+    private String accessKeySecret;
 
-    @Value("${apiUrl}")
-    private String apiUrl;
+    @Value("${domain}")
+    private String domain;
+
+    @Value("${sms.aliyun.signName}")
+    private String signName;
 
 
     @Override
     public String getApiUrl() {
-        return apiUrl;
+        return domain;
     }
 }

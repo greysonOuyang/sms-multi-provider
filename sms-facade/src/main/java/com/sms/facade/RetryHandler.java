@@ -1,7 +1,6 @@
 package com.sms.facade;
 
-import com.sms.facade.domain.SmsRequest;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.sms.api.domain.SmsRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;

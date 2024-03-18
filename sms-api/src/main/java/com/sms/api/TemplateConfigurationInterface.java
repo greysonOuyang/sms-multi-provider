@@ -1,5 +1,7 @@
 package com.sms.api;
 
+import com.sms.api.domain.MessageTemplate;
+
 /**
  * 模板配置形式接口
  */

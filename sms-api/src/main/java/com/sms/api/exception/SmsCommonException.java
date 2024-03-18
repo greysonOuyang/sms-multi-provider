@@ -1,4 +1,4 @@
-package com.sms.exception;
+package com.sms.api.exception;
 
 /**
  * 发送短信异常
@@ -9,13 +9,13 @@ package com.sms.exception;
  * Time: 17:15
  */
 
-public class SmsProviderException extends Exception {
+public class SmsCommonException extends Exception {
 
-    public SmsProviderException(String message) {
+    public SmsCommonException(String message) {
         super(message);
     }
 
-    public SmsProviderException(String message, Throwable cause) {
+    public SmsCommonException(String message, Throwable cause) {
         super(message, cause);
     }
 }

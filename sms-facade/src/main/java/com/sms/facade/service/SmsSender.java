@@ -1,11 +1,10 @@
-package com.sms.facade;
+package com.sms.facade.service;
 
-import cn.hutool.core.collection.CollectionUtil;
-import com.sms.api.TemplateConfigurationInterface;
 import com.sms.api.SmsProvider;
 import com.sms.api.TemplateMessageBuilder;
-import com.sms.exception.SmsProviderException;
-import com.sms.facade.domain.SmsRequest;
+import com.sms.api.exception.SmsSendException;
+import com.sms.facade.RetryHandler;
+import com.sms.api.domain.SmsRequest;
 import com.sms.load.balance.LoadBalancerManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,11 +39,11 @@ public class SmsSender {
     @Autowired
     private TemplateMessageBuilder templateMessageBuilder;
 
-    public void sendSms(String phoneNumber, String message) throws SmsProviderException {
+    public void sendSms(String phoneNumber, String message) throws SmsSendException {
         // 获取服务提供商
         SmsProvider chosenProvider = loadBalancerManager.currentProvider();
         if (chosenProvider == null) {
-            throw new SmsProviderException("All sms providers are unavailable");
+            throw new SmsSendException("All sms providers are unavailable");
         }
 
         SmsRequest request = new SmsRequest(phoneNumber, message, chosenProvider);
@@ -57,7 +56,7 @@ public class SmsSender {
         }
     }
 
-    public void sendByTemplate(String businessCode, String phoneNumber, Collection<?> params) throws SmsProviderException {
+    public void sendByTemplate(String businessCode, String phoneNumber, Collection<?> params) throws SmsSendException {
         // 获取服务提供商
         SmsProvider chosenProvider = loadBalancerManager.currentProvider();
         String message = templateMessageBuilder.buildMessage(businessCode, params, chosenProvider.getName());

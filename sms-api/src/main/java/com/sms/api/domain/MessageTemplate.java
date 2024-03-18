@@ -1,4 +1,4 @@
-package com.sms.api;
+package com.sms.api.domain;
 import lombok.Data;
 
 import java.util.Map;

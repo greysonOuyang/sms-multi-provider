@@ -2,7 +2,7 @@ package com.sms.facade.queue;
 
 
 import com.sms.facade.RetryHandler;
-import com.sms.facade.domain.SmsRequest;
+import com.sms.api.domain.SmsRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
