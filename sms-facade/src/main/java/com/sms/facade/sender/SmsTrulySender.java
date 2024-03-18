@@ -6,6 +6,7 @@ import com.sms.api.domain.SmsRequest;
 import com.sms.api.domain.SmsResponse;
 import com.sms.api.exception.SmsSendException;
 import com.sms.load.balance.LoadBalancerManager;
+import com.sms.service.provider.ProviderManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
@@ -42,6 +43,9 @@ public class SmsTrulySender {
     @Autowired
     private LoadBalancerManager loadBalancerManager;
 
+    @Autowired
+    private ProviderManager providerManager;
+
     @Async
     public void executeMulti(BatchSmsRequest smsRequest)  {
         smsRequest.getTargets().forEach(target -> {
@@ -67,14 +71,20 @@ public class SmsTrulySender {
             while (attempts++ < limit) {
                 try {
                     // TODO 处理历史记录等
-                    CompletableFuture<SmsResponse> smsResponseCompletableFuture = chosenProvider.sendSms(smsRequest);
+                    CompletableFuture<SmsResponse> future = chosenProvider.sendSms(smsRequest);
+                    // 发送成功，从retryMap中移除此任务
+                    retryMap.remove(id);
                     return;
                 } catch (Exception e) {
-                    loadBalancerManager.failInc(chosenProvider);
+                    providerManager.handleFailure(chosenProvider);
                     retryMap.put(id, smsRequest);
+                    if (attempts >= limit) {
+                        // 如果超过最大重试次数，从retryMap中移除此任务
+                        retryMap.remove(id);
+                    }
                 }
             }
-        }else{
+        } else{
             // 不需要重试
             try{
                 chosenProvider.sendSms(smsRequest);
@@ -96,20 +106,22 @@ public class SmsTrulySender {
             SmsRequest request = entry.getValue();
 
             int retryCount = retryCountMap.getOrDefault(threadId, 0);
+            // 增加重试计数
+            retryCount++;
+            if (retryCount >= maxRetryTimes) {
+                // 重试次数超过上限，把这个任务从重试列表中删除
+                iterator.remove();
+                continue;
+            }
 
             try {
                 // 重新选择服务商来发送
                 loadBalancerManager.currentProvider().sendSms(request);
-                //如果发送成功，从重试列表中删除
+                // 如果发送成功，从重试列表中删除
                 iterator.remove();
             } catch (Exception ignore){
-                // 这里增加重试计数，并检查是否超过最大重试次数
-                retryCount++;
+                // 未发送成功，更新重试次数
                 retryCountMap.put(threadId, retryCount);
-                if (retryCount >= maxRetryTimes) {
-                    // 重试次数超过上限，把这个任务从重试列表中删除
-                    iterator.remove();
-                }
             }
         }
     }
