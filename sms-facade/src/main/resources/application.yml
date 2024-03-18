@@ -4,11 +4,13 @@ sms:
   providers:
     aliyun:
     ctyun:
+  # 失败重试机制
+  retry:
+    enabled: # 默认 false 关闭
+    limit:  # 立即重试次数，不设置默认为3次
+    maxRetryTimes: #最大重试次数
+    fixedDelay: # 默认5000 单位ms，每隔多少时间重试一次
 
-retry:
-  enabled: true
-  limit: 3 # 立即重试次数
-  maxRetryTimes: #最大重试次数
 
 load:
   balance:

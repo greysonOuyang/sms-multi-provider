@@ -1,4 +1,8 @@
-package com.sms.api.domain;
+package com.sms.api;
+
+import com.sms.api.domain.BatchSmsRequest;
+import com.sms.api.domain.SmsRequest;
+import com.sms.api.domain.SmsResponse;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;

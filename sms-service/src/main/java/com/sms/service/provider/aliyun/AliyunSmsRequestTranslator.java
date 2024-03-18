@@ -13,10 +13,10 @@ public class AliyunSmsRequestTranslator implements SmsRequestTranslator {
     @Override
     public SendSmsRequest translate(SmsRequest smsRequest) {
         return SendSmsRequest.builder()
-                .phoneNumbers(smsRequest.getMobiles())
-                .signName(smsRequest.getSignText())
+                .phoneNumbers(smsRequest.getPhoneNumber())
+                .signName(smsRequest.getSignName())
                 .templateCode(smsRequest.getReqCode())
-                .templateParam(smsRequest.getMsg())
+                .templateParam(smsRequest.getParams())
                 .build();
     }
 }

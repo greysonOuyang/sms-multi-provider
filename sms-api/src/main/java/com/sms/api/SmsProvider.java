@@ -1,15 +1,22 @@
 package com.sms.api;
 
 
+import com.sms.api.domain.BatchSmsRequest;
+import com.sms.api.domain.SmsRequest;
+import com.sms.api.domain.SmsResponse;
 import com.sms.api.exception.SmsSendException;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 /**
  * @author greysonchance
  */
 public interface SmsProvider {
-    void sendSms(String phoneNumber, String message) throws SmsSendException;
+
+    CompletableFuture<SmsResponse> sendSms(SmsRequest smsRequest);
+
+//    CompletableFuture<List<SmsResponse>> sendBatchSms(BatchSmsRequest request);
 
     /**
      * 探测服务是否可用，默认未实现，即true，如果有服务商提供了探测接口，可接入

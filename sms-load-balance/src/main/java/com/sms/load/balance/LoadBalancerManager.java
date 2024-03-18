@@ -74,6 +74,10 @@ public class LoadBalancerManager implements UnavailableHandler {
         failCounter = providerConfig.getAllProviders().stream().collect(Collectors.toMap(Function.identity(), provider -> 0));
     }
 
+    public String currentProviderName() {
+        return getProvider().getName();
+    }
+
     public SmsProvider currentProvider() {
         if (getProvider() == null) {
             throw new RuntimeException("Can't get a sms provider, please check config or make sure provider is available");

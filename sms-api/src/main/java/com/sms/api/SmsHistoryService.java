@@ -2,9 +2,8 @@ package com.sms.api;
 
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.sms.facade.domain.BatchSmsRequest;
-import com.sms.facade.domain.SmsHistoryEntity;
-import com.sms.facade.domain.SmsResponse;
+import com.sms.api.domain.BatchSmsRequest;
+import com.sms.api.domain.SmsHistoryEntity;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -22,9 +21,9 @@ public interface SmsHistoryService extends IService<SmsHistoryEntity> {
     /**
      * 发送基本参数入库
      * @param smsRequest
-     * @param businessEnum
+     * @param businessCode
      */
-    void buildBaseParam(BatchSmsRequest smsRequest, BusinessEnum businessEnum);
+    void buildBaseParam(BatchSmsRequest smsRequest, String businessCode);
 
     /**
      * 设置响应结果

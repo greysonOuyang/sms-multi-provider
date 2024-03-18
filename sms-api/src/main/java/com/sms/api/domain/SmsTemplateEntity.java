@@ -37,6 +37,9 @@ public class SmsTemplateEntity implements Serializable {
 	 * 模板动态参数
 	 */
 	private String parameters;
+
+	private String paramType;
+
 	/**
 	 * 记录创建时间
 	 */
@@ -46,9 +49,9 @@ public class SmsTemplateEntity implements Serializable {
 	 */
 	private Date updateTime;
 	/**
-	 * 请求标识
+	 * 请求标识 模板ID
 	 */
-	private String reqCode;
+	private String templateId;
 	/**
 	 * 描述
 	 */
@@ -57,11 +60,15 @@ public class SmsTemplateEntity implements Serializable {
 	 * 模板状态
 	 */
 	private String status;
+
 	/**
 	 * 短信服务商
 	 */
 	private String smsProvider;
 
+	/**
+	 * 业务唯一标识
+	 */
 	private String businessCode;
 
 }

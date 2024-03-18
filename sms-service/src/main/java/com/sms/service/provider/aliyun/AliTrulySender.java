@@ -4,8 +4,11 @@ import com.aliyun.auth.credentials.Credential;
 import com.aliyun.auth.credentials.provider.StaticCredentialProvider;
 import com.aliyun.sdk.service.dysmsapi20170525.AsyncClient;
 import com.aliyun.sdk.service.dysmsapi20170525.models.SendSmsRequest;
-import com.aliyun.sdk.service.dysmsapi20170525.models.SendSmsResponse;
-import com.sms.service.AbstractSmsProvider;
+import com.sms.api.SmsProvider;
+import com.sms.api.SmsRequestTranslator;
+import com.sms.api.SmsResponseTranslator;
+import com.sms.api.domain.SmsRequest;
+import com.sms.api.domain.SmsResponse;
 import darabonba.core.client.ClientOverrideConfiguration;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +17,25 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.concurrent.CompletableFuture;
+
+
+/**
+ * Author: greyson
+ * Email: ouyangguanling@ssc-hn.com
+ * Date: 2024/3/18
+ * Time: 16:18
+ */
 @Slf4j
-@Service("aliyunSmsProvider")
-public class AliyunSmsProvider extends AbstractSmsProvider {
-
-
+@Service
+public class AliTrulySender implements SmsProvider {
     @Autowired
     private AliyunSmsProviderProperties smsConfig;
+
+    @Autowired
+    private SmsRequestTranslator requestTranslator;
+
+    @Autowired
+    private SmsResponseTranslator responseTranslator;
 
     private AsyncClient client;
 
@@ -41,18 +56,16 @@ public class AliyunSmsProvider extends AbstractSmsProvider {
                 .build();
     }
 
+    @Override
     @Async
-    public CompletableFuture<SendSmsResponse> sendSms(SendSmsRequest smsRequest) {
-        return client.sendSms(smsRequest)
+    public CompletableFuture<SmsResponse> sendSms(SmsRequest smsRequest) {
+        SendSmsRequest request = (SendSmsRequest) requestTranslator.translate(smsRequest);
+        return client.sendSms(request)
+                        .thenApply(resp -> responseTranslator.translate(resp, smsRequest))
                 .exceptionally(throwable -> {
                     log.error("调用阿里云服务发送短信出现异常: ", throwable);
                     return null;
                 });
-    }
-
-
-    @Override
-    protected void sendSmsInternal(String phoneNumber, String message) throws Exception {
 
     }
 
@@ -66,4 +79,3 @@ public class AliyunSmsProvider extends AbstractSmsProvider {
         return "aliyun";
     }
 }
-

@@ -1,8 +1,8 @@
 package com.sms.service.templates.config;
 
-import com.sms.api.TemplateConfigurationInterface;
-import com.sms.service.templates.ConfigFileTemplateConfigurationInterface;
-import com.sms.service.templates.DatabaseTemplateConfigurationInterface;
+import com.sms.api.TemplateConfiguration;
+import com.sms.service.templates.ConfigFileTemplateConfiguration;
+import com.sms.service.templates.DatabaseTemplateConfiguration;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
@@ -14,15 +14,15 @@ public class MessageTemplateProviderConfiguration {
 
     @Bean(name = "serviceProviderAMessageTemplateProvider")
     @ConditionalOnProperty(name = "template.config.type", havingValue = "config-file", matchIfMissing = true)
-    public TemplateConfigurationInterface serviceProviderAMessageTemplateProvider() {
+    public TemplateConfiguration serviceProviderAMessageTemplateProvider() {
         log.info("基础配置——【模板配置形式】，使用文件配置");
-        return new ConfigFileTemplateConfigurationInterface();
+        return new ConfigFileTemplateConfiguration();
     }
 
     @Bean(name = "serviceProviderBMessageTemplateProvider")
     @ConditionalOnProperty(name = "template.config.type", havingValue = "database")
-    public TemplateConfigurationInterface serviceProviderBMessageTemplateProvider() {
+    public TemplateConfiguration serviceProviderBMessageTemplateProvider() {
         log.info("基础配置——【模板配置形式】，使用数据库配置");
-        return new DatabaseTemplateConfigurationInterface();
+        return new DatabaseTemplateConfiguration();
     }
 }

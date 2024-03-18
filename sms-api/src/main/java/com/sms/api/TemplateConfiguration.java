@@ -1,11 +1,11 @@
 package com.sms.api;
 
-import com.sms.api.domain.MessageTemplate;
+import com.sms.api.domain.SmsTemplateEntity;
 
 /**
  * 模板配置形式接口
  */
-public interface TemplateConfigurationInterface {
+public interface TemplateConfiguration {
 
     /**
      * 获取模板
@@ -14,7 +14,7 @@ public interface TemplateConfigurationInterface {
      * @param provider      服务商名称
      * @return              找到的模板
      */
-    MessageTemplate getTemplate(String businessCode, String provider);
+    SmsTemplateEntity getTemplate(String businessCode, String provider);
 
 
 }

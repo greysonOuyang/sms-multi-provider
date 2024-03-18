@@ -1,7 +1,7 @@
 package com.sms.service.templates;
 
-import com.sms.api.domain.MessageTemplate;
-import com.sms.api.TemplateConfigurationInterface;
+import com.sms.api.TemplateConfiguration;
+import com.sms.api.domain.SmsTemplateEntity;
 import com.sms.service.templates.domain.Configuration;
 import com.sms.service.templates.domain.ProviderTemplate;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,7 +17,7 @@ import com.alibaba.fastjson.JSON;
 
 
 @Service
-public class ConfigFileTemplateConfigurationInterface implements TemplateConfigurationInterface {
+public class ConfigFileTemplateConfiguration implements TemplateConfiguration {
 
     @Value("${template.file:classPath:resources/templates/templates.json}")
     private String templateFilePath; // 从配置文件中读取
@@ -44,7 +44,7 @@ public class ConfigFileTemplateConfigurationInterface implements TemplateConfigu
     }
 
     // 获取模版方法
-    public MessageTemplate getTemplate(String businessCode, String provider) {
+    public SmsTemplateEntity getTemplate(String businessCode, String provider) {
         // 先获取到对应的服务商
         Map<String, ProviderTemplate> providerTemplateMap = config.getTemplates().get(provider);
         if (providerTemplateMap == null) {
@@ -55,10 +55,10 @@ public class ConfigFileTemplateConfigurationInterface implements TemplateConfigu
         if (template == null) {
             throw new RuntimeException("Template not found for messageType: " + businessCode);
         }
-        MessageTemplate messageTemplate = new MessageTemplate();
-        messageTemplate.setTemplate(template.getContent());
+        SmsTemplateEntity messageTemplate = new SmsTemplateEntity();
+        messageTemplate.setTemplateText(template.getContent());
         messageTemplate.setTemplateId(template.getTemplateId());
-        messageTemplate.setProvider(provider);
+        messageTemplate.setSmsProvider(provider);
         messageTemplate.setBusinessCode(businessCode);
         return messageTemplate;
     }

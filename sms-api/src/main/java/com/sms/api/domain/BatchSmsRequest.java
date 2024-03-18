@@ -22,34 +22,5 @@ public class BatchSmsRequest {
     /**
      * 发送目标以及模板参数 必填
      */
-    private List<SmsTarget> targets;
-
-
-    @Data
-    public static class SmsTarget {
-        /**
-         * 发送短信用不上，用于记录在历史表中
-         */
-        private String receiverName;
-        /**
-         * 唯一性ID 用来追踪发送结果
-         */
-        private String uniqueId;
-
-        /**
-         * 电话
-         */
-        private String phoneNumber;
-        /**
-         * 模板参数
-         */
-        private Map<String, String> templateParams;
-
-        /**
-         * 模板参数
-         */
-        private String params;
-
-
-    }
+    private List<SmsRequest> targets;
 }
