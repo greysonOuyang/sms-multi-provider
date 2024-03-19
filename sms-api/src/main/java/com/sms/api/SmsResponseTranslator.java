@@ -9,7 +9,7 @@ import java.util.concurrent.CompletableFuture;
  * 响应翻译器
  * <p>
  * Author: greyson
- * Email: ouyangguanling@ssc-hn.com
+ * Email:  
  * Date: 2024/3/18
  * Time: 16:38
  */

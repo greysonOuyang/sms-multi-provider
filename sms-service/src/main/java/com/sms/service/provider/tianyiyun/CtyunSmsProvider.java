@@ -1,8 +1,14 @@
 package com.sms.service.provider.tianyiyun;
 
+import com.sms.api.AbstractSmsProvider;
+import com.sms.api.domain.SmsRequest;
+import com.sms.api.domain.SmsResponse;
+import com.sms.api.exception.SmsSendException;
 import com.sms.service.provider.config.SmsProviderProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.concurrent.CompletableFuture;
 
 @Service("ctyunSmsProvider")
 public class CtyunSmsProvider extends AbstractSmsProvider {
@@ -14,8 +20,8 @@ public class CtyunSmsProvider extends AbstractSmsProvider {
     }
 
     @Override
-    protected void sendSmsInternal(String phoneNumber, String message) throws Exception {
-
+    public CompletableFuture<SmsResponse> sendSms(SmsRequest smsRequest) throws SmsSendException {
+        return null;
     }
 
     @Override

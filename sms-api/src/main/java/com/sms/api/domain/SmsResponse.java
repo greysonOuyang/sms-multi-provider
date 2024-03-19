@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
  * 响应结果
  * <p>
  * Author: greyson
- * Email: ouyangguanling@ssc-hn.com
+ * Email:  
  * Date: 2024/1/12
  * Time: 15:55
  */
@@ -22,7 +22,7 @@ public class SmsResponse<T> {
      */
     private Boolean status;
     /**
-     *  发送状态 三医 - 0.发送成功 阿里OK
+     *  发送状态
      */
     private Boolean sendStatus;
 
@@ -41,26 +41,6 @@ public class SmsResponse<T> {
      */
     private String uniqueId;
 
-//    public SmsResponse(Boolean status, Boolean sendStatus, String msg) {
-//        this.status = status;
-//        this.sendStatus = sendStatus;
-//        this.msg = msg;
-//    }
-//
-//    public SmsResponse(Boolean status, Boolean sendStatus, String msg, String uniqueId) {
-//        this.status = status;
-//        this.sendStatus = sendStatus;
-//        this.msg = msg;
-//        this.uniqueId = uniqueId;
-//    }
-//
-//    public SmsResponse(Boolean status, Boolean sendStatus, String msg, T data, String uniqueId) {
-//        this.status = status;
-//        this.sendStatus = sendStatus;
-//        this.msg = msg;
-//        this.data = data;
-//        this.uniqueId = uniqueId;
-//    }
 
     private SmsResponse(Builder<T> builder) {
         this.status = builder.status;

@@ -26,7 +26,10 @@ public class ProviderManager {
     @Value("${sms.failure.recovery.time:5}")
     private int recoveryTime;
 
-    @Value("${sms.failure.window.time:1}")
+    /**
+     * 单位 s
+     */
+    @Value("${sms.failure.window.time:60}")
     private int failureWindowTime;
 
     private ConcurrentHashMap<SmsProvider, ConcurrentLinkedQueue<Long>> failureMap; // 原先的failureCount改为failureMap来记录每次失败的时间
@@ -48,7 +51,7 @@ public class ProviderManager {
         failureTimes.offer(System.currentTimeMillis());
 
         // 移除时间窗口外的失败记录
-        while (!failureTimes.isEmpty() && failureTimes.peek() < System.currentTimeMillis() - failureWindowTime * 60 * 1000) {
+        while (!failureTimes.isEmpty() && failureTimes.peek() < System.currentTimeMillis() - failureWindowTime * 1000) {
             failureTimes.poll();
         }
 

@@ -5,7 +5,6 @@ import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.sms.api.RequestHelperService;
 import com.sms.api.TemplateConfiguration;
-import com.sms.api.domain.BatchSmsRequest;
 import com.sms.api.domain.SmsRequest;
 import com.sms.api.domain.SmsTemplateEntity;
 import com.sms.api.exception.SmsCommonException;
@@ -23,7 +22,7 @@ import java.util.Map;
  * 短信业务服务实现
  * <p>
  * Author: greyson
- * Email: ouyangguanling@ssc-hn.com
+ * Email:  
  * Date: 2024/1/18
  * Time: 17:45
  */
@@ -46,7 +45,7 @@ public class RequestHelperServiceImpl implements RequestHelperService {
                 .receiverName(name).build();
 
         SmsTemplateEntity template = templateConfiguration.getTemplate(businessCode, loadBalancerManager.currentProviderName());
-        // TODO 参数形式以及组合待优化
+        // TODO 参数形式以及组合待优化 数据库加字段 配置文件加字段
         if (template.getParamType().equals(ParamTypeEnum.MAP.getType())) {
             smsRequest.setTemplateParams(generateMap(template.getParameters(), paramValues));
         } else {
@@ -64,7 +63,6 @@ public class RequestHelperServiceImpl implements RequestHelperService {
         String[] keysArray = keys.split(",");
         if (keysArray.length != values.size()) {
             throw new IllegalArgumentException("键的数量和值的数量不匹配！");
-            // 这里可以根据需要抛出一个异常
         } else {
             for (int i = 0; i < keysArray.length; i++) {
                 paramMap.put(keysArray[i].trim(), values.get(i));

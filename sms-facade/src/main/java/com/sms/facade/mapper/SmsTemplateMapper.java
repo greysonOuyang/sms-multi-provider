@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
  * 短信模板
  * 
  * @author greyson
- * @email ouyangguanling@ssc-hn.com
+ * @email  
  * @date 2024-01-12 11:02:58
  */
 @Mapper

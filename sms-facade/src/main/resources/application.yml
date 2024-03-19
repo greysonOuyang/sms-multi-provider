@@ -3,6 +3,7 @@ sms:
     selected: aliyun # aliyun、ctyun，可支持多选, 多选格式为 aliyun,ctyun
   providers:
     aliyun:
+      weight: 10
     ctyun:
   # 失败重试机制
   retry:

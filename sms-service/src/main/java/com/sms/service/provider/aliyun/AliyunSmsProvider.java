@@ -5,7 +5,6 @@ import com.aliyun.auth.credentials.provider.StaticCredentialProvider;
 import com.aliyun.sdk.service.dysmsapi20170525.AsyncClient;
 import com.aliyun.sdk.service.dysmsapi20170525.models.SendSmsRequest;
 import com.sms.api.AbstractSmsProvider;
-import com.sms.api.SmsProvider;
 import com.sms.api.SmsRequestTranslator;
 import com.sms.api.SmsResponseTranslator;
 import com.sms.api.domain.SmsRequest;
@@ -22,13 +21,13 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * Author: greyson
- * Email: ouyangguanling@ssc-hn.com
+ * Email:  
  * Date: 2024/3/18
  * Time: 16:18
  */
 @Slf4j
-@Service
-public class AliTrulySender extends AbstractSmsProvider {
+@Service("aliyunSmsProvider")
+public class AliyunSmsProvider extends AbstractSmsProvider {
     @Autowired
     private AliyunSmsProviderProperties smsConfig;
 

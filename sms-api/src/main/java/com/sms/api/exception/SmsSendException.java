@@ -4,7 +4,7 @@ package com.sms.api.exception;
  * 发送短信异常
  * <p>
  * Author: greyson
- * Email: ouyangguanling@ssc-hn.com
+ * Email:  
  * Date: 2024/3/14
  * Time: 17:15
  */

@@ -13,5 +13,4 @@ public abstract class AbstractSmsProvider implements SmsProvider {
         this.available = available;
     }
     
-    // 其他方法
 }

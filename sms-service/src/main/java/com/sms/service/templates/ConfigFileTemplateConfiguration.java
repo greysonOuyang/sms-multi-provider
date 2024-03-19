@@ -1,65 +1,90 @@
 package com.sms.service.templates;
 
+import com.alibaba.fastjson2.JSON;
 import com.sms.api.TemplateConfiguration;
 import com.sms.api.domain.SmsTemplateEntity;
 import com.sms.service.templates.domain.Configuration;
 import com.sms.service.templates.domain.ProviderTemplate;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import com.alibaba.fastjson.JSON;
-
-
+@Slf4j
 @Service
+@EnableScheduling
 public class ConfigFileTemplateConfiguration implements TemplateConfiguration {
 
-    @Value("${template.file:classPath:resources/templates/templates.json}")
-    private String templateFilePath; // 从配置文件中读取
 
-    private volatile Configuration config = new Configuration(); // 当前加载的配置
+    @Value("${template.file:classPath:resources/templates/templates.json}")
+    private String templateFilePath;
+
+    private volatile Configuration config = new Configuration();
+
+    private final ReadWriteLock rwLock = new ReentrantReadWriteLock();
 
     @PostConstruct
     private void onPostConstruct() {
         loadTemplatesFromFile();
     }
 
+    @Scheduled(fixedDelayString = "${config.updateInterval:600000}")
+    public void refresh() {
+        loadTemplatesFromFile();
+    }
 
-    private synchronized void loadTemplatesFromFile() {
+    private void loadTemplatesFromFile() {
+        rwLock.writeLock().lock();
         try {
-            // TODO 校验文件路径是否存在
-            String content = new String(Files.readAllBytes(Paths.get(templateFilePath)));
-            Configuration newConfig = JSON.parseObject(content, Configuration.class);
-            if (!config.getVersion().equals(newConfig.getVersion())) {
-                config = newConfig;
+            Path path = Paths.get(templateFilePath);
+            if (!Files.exists(path)) {
+                log.error("Template file does not exist: {}", templateFilePath);
+                return;
             }
+            String content = new String(Files.readAllBytes(path));
+            config = JSON.parseObject(content, Configuration.class);
         } catch (IOException e) {
-            throw new RuntimeException("Failed to load templates from config file", e);
+            log.error("Failed to load templates from config file", e);
+        } finally {
+            rwLock.writeLock().unlock();
         }
     }
 
-    // 获取模版方法
     public SmsTemplateEntity getTemplate(String businessCode, String provider) {
-        // 先获取到对应的服务商
-        Map<String, ProviderTemplate> providerTemplateMap = config.getTemplates().get(provider);
-        if (providerTemplateMap == null) {
-            throw new RuntimeException("Get Template failed.Cause Provider not found, please check the: " + provider);
+        rwLock.readLock().lock();
+        try {
+            refresh();
+
+            Map<String, ProviderTemplate> providerTemplateMap = config.getTemplates().get(provider);
+            if (providerTemplateMap == null) {
+                log.error("Provider not found: {}", provider);
+                throw new RuntimeException("Provider not found: " + provider);
+            }
+
+            ProviderTemplate template = providerTemplateMap.get(businessCode);
+            if (template == null) {
+                log.error("Template not found for messageType: {}", businessCode);
+                throw new RuntimeException("Template not found for messageType: " + businessCode);
+            }
+
+            SmsTemplateEntity messageTemplate = new SmsTemplateEntity();
+            messageTemplate.setTemplateText(template.getContent());
+            messageTemplate.setTemplateId(template.getTemplateId());
+            messageTemplate.setSmsProvider(provider);
+            messageTemplate.setBusinessCode(businessCode);
+            return messageTemplate;
+        } finally {
+            rwLock.readLock().unlock();
         }
-        // 再获取对应的消息类型的模版
-        ProviderTemplate template = providerTemplateMap.get(businessCode);
-        if (template == null) {
-            throw new RuntimeException("Template not found for messageType: " + businessCode);
-        }
-        SmsTemplateEntity messageTemplate = new SmsTemplateEntity();
-        messageTemplate.setTemplateText(template.getContent());
-        messageTemplate.setTemplateId(template.getTemplateId());
-        messageTemplate.setSmsProvider(provider);
-        messageTemplate.setBusinessCode(businessCode);
-        return messageTemplate;
     }
 }

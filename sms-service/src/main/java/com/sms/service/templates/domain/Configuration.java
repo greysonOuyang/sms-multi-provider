@@ -6,7 +6,6 @@ import java.util.Map;
 
 @Data
 public class Configuration {
-    private String version;
     /**
      * key1是服务商名称，key2是模版的自定义业务code
      */

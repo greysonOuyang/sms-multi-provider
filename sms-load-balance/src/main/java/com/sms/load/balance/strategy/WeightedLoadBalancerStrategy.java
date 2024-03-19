@@ -23,10 +23,12 @@ public class WeightedLoadBalancerStrategy implements LoadBalancerStrategy {
     public SmsProvider choose(List<SmsProvider> providers) {
         for (SmsProvider provider : providers) {
             if (!weights.containsKey(provider)) {
-                String propertyName = "sms.provider." + provider.getName();
+                String propertyName = "sms.providers." + provider.getName() +".weight";
                 String weightStr = env.getProperty(propertyName);
                 if (weightStr != null) {
                     weights.put(provider, Integer.parseInt(weightStr));
+                } else {
+                    weights.put(provider, 1);
                 }
             }
         }
@@ -45,6 +47,7 @@ public class WeightedLoadBalancerStrategy implements LoadBalancerStrategy {
                 return entry.getKey();
             }
         }
+        // TODO 测试权重为0会如何
 
         // 仅会在所有服务provider权重为0或负数时才会走到这里，并返回第一个服务商
         return providers.get(0);
