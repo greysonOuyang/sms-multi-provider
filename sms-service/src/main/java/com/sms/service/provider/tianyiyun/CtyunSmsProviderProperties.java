@@ -5,6 +5,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
+/**
+ * 天翼云
+ */
 @Configuration
 @PropertySource("classpath:ctyun.properties")
 public class CtyunSmsProviderProperties implements SmsProviderProperties {
@@ -22,5 +25,4 @@ public class CtyunSmsProviderProperties implements SmsProviderProperties {
         return apiUrl;
     }
 
-    // getter methods...
 }

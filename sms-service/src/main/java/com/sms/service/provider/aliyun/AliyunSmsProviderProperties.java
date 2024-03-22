@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
+/**
+ * 阿里云
+ */
 @Data
 @Configuration
 @PropertySource("classpath:aliyun.properties")
