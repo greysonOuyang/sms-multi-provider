@@ -14,14 +14,15 @@
         <module>sms-service</module>
         <module>sms-load-balance</module>
         <module>sms-facade</module>
+        <module>sms-test</module>
     </modules>
 
     <properties>
         <sms.version>1.0</sms.version>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring.boot.version>3.2.0</spring.boot.version>
+        <spring.boot.version>2.5.12</spring.boot.version>
         <hutool.version>5.8.25</hutool.version>
         <kafka.version>3.1.1</kafka.version>
         <lombok.version>1.18.30</lombok.version>
@@ -82,11 +83,11 @@
                 <artifactId>spring-kafka</artifactId>
                 <version>${kafka.version}</version>
             </dependency>
-<!--            <dependency>-->
-<!--                <groupId>ch.qos.logback</groupId>-->
-<!--                <artifactId>logback-classic</artifactId>-->
-<!--                <version>${logback.version}</version>-->
-<!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>ch.qos.logback</groupId>-->
+            <!--                <artifactId>logback-classic</artifactId>-->
+            <!--                <version>${logback.version}</version>-->
+            <!--            </dependency>-->
             <dependency>
                 <groupId>com.alibaba.fastjson2</groupId>
                 <artifactId>fastjson2</artifactId>
@@ -109,7 +110,6 @@
                 <artifactId>alibabacloud-dysmsapi20170525</artifactId>
                 <version>2.0.24</version>
             </dependency>
-
         </dependencies>
     </dependencyManagement>
 

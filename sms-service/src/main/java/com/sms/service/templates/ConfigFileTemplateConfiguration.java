@@ -43,7 +43,7 @@ public class ConfigFileTemplateConfiguration implements TemplateConfiguration {
         loadTemplatesFromFile();
     }
 
-    private void loadTemplatesFromFile() {
+    public void loadTemplatesFromFile() {
         rwLock.writeLock().lock();
         try {
             Path path = Paths.get(templateFilePath);
@@ -67,8 +67,8 @@ public class ConfigFileTemplateConfiguration implements TemplateConfiguration {
 
             Map<String, ProviderTemplate> providerTemplateMap = config.getTemplates().get(provider);
             if (providerTemplateMap == null) {
-                log.error("Provider not found: {}", provider);
-                throw new RuntimeException("Provider not found: " + provider);
+                log.error("Provider not found when read the template config file: {}", provider);
+                throw new RuntimeException("Provider not found when read the template config file: " + provider);
             }
 
             ProviderTemplate template = providerTemplateMap.get(businessCode);
@@ -86,5 +86,9 @@ public class ConfigFileTemplateConfiguration implements TemplateConfiguration {
         } finally {
             rwLock.readLock().unlock();
         }
+    }
+
+    public Object getConfig() {
+        return config;
     }
 }
