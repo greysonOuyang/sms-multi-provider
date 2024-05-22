@@ -1,51 +1,17 @@
 # INTRODUCE
-
-# 模板配置
-1. 数据库方式
-```dtd
-CREATE TABLE `cp_sms_history` (
-	`id` BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
-	`template_id` BIGINT(20) NOT NULL COMMENT '模板表主键ID',
-	`business_code` VARCHAR(50) NOT NULL COMMENT '业务编码' COLLATE 'utf8_general_ci',
-	`sender_id` BIGINT(20) NOT NULL COMMENT '发送人',
-	`sender_name` VARCHAR(50) NOT NULL COMMENT '发送人' COLLATE 'utf8_general_ci',
-	`receiver_name` VARCHAR(50) NULL DEFAULT NULL COMMENT '接收人' COLLATE 'utf8_general_ci',
-	`receiver_phone` VARCHAR(50) NULL DEFAULT NULL COMMENT '接收人电话' COLLATE 'utf8_general_ci',
-	`result` TINYINT(4) NULL DEFAULT '0' COMMENT '发送结果，成功/失败',
-	`message` VARCHAR(50) NULL DEFAULT NULL COMMENT '回执消息' COLLATE 'utf8_general_ci',
-	`data` VARCHAR(500) NULL DEFAULT NULL COMMENT '其余回执信息' COLLATE 'utf8_general_ci',
-	`unique_id` VARCHAR(255) NOT NULL COMMENT '跟踪ID' COLLATE 'utf8_general_ci',
-	`params` VARCHAR(500) NULL DEFAULT NULL COMMENT '发送的参数' COLLATE 'utf8_general_ci',
-	`create_time` TIMESTAMP NULL DEFAULT NULL COMMENT '创建时间',
-	`update_time` TIMESTAMP NULL DEFAULT NULL COMMENT '更新时间',
-	PRIMARY KEY (`id`) USING BTREE,
-	INDEX `idx_unique+id` (`unique_id`) USING BTREE
-)
-COMMENT='短信发送历史记录'
-COLLATE='utf8_general_ci'
-ENGINE=InnoDB
-AUTO_INCREMENT=21
-;
-
-        CREATE TABLE `cp_sms_template` (
-        `id` BIGINT(20) NOT NULL DEFAULT '0' COMMENT '模板唯一标识',
-        `name` VARCHAR(255) NOT NULL COMMENT '模板名字' COLLATE 'utf8_general_ci',
-        `template_text` TEXT NOT NULL COMMENT '短信内容模板' COLLATE 'utf8_general_ci',
-        `parameters` VARCHAR(500) NULL DEFAULT NULL COMMENT '模板动态参数' COLLATE 'utf8_general_ci',
-        `create_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT '记录创建时间',
-        `update_time` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录更新时间',
-        `req_code` VARCHAR(50) NOT NULL COMMENT '请求标识' COLLATE 'utf8_general_ci',
-        `description` TEXT NULL DEFAULT NULL COMMENT '描述' COLLATE 'utf8_general_ci',
-        `status` VARCHAR(20) NULL DEFAULT 'active' COMMENT '模板状态' COLLATE 'utf8_general_ci',
-        `sms_provider` VARCHAR(50) NULL DEFAULT NULL COMMENT '短信服务商' COLLATE 'utf8_general_ci',
-        `business_code` VARCHAR(50) NULL DEFAULT NULL COMMENT '业务标识' COLLATE 'utf8_general_ci',
-        PRIMARY KEY (`id`) USING BTREE,
-        UNIQUE INDEX `union_idx_provider_business_code` (`sms_provider`, `business_code`) USING BTREE
-        )
-        COMMENT='短信模板'
-        COLLATE='utf8_general_ci'
-        ENGINE=InnoDB
-        ;
+该仓库是一个多厂商短信发送平台，由于身体原因，在未完成之际就不得不停手，如有兴趣可在此基础之上完善，如若对您有些许帮助，幸甚之至！
+该短信服务原设想主要支持的功能特性见尾部，目前已实现重试机制、负载均衡、容灾备份等功能的基本代码，代码目前并不能运行，各项配置还未补充完毕。
+持久化、历史记录等功能本已有雏形，但功能也尚未添加。
+综合所看，该仓库代码半成品也算不上，不忍弃之，姑且上传，如错误百出（设计或者思路方面），烦请指出，我仍然可以学习，如是代码错误之处，还请海涵。
 
 
-```
+# 特性
+1. 抽象化：对不同厂商的短信发送接口进行统一的抽象设计，以达到接口一致，方便替换和扩展。
+2. 配置化：每个厂商的服务接口，配置以及模板都可能存在差异，应该包含一个配置中心或配置文件，来管理每个厂商的接口URL、鉴权信息、模板参数等。
+3. 容灾备份：短信服务对时间性的要求较高，一旦某个厂商的服务出现问题，要能够尽快切换到其他厂商。
+4. 负载均衡：如果业务规模较大，可能需要在多个厂商之间进行负载均衡，以充分利用每一个厂商的服务能力。
+5. （TODO）监控报警：设定监控系统，实时收集每个厂商的服务质量数据，比如发送成功率，发送延迟等。一旦某个厂商的服务质量低于预设阈值，则报警并自动切换到其他厂商。日志收集或者数据库
+6. 重试机制：当发送短信失败时，需要有一个重试的机制，比如可以重试N次，每次的间隔时间逐渐增大。
+7. 数据持久化：需要有一套完善的数据持久化方案，例如：使用数据库保存所有发送的短信内容，状态等信息，这样可以用于后期的数据分析和归档。
+8. 状态查询：在短信发送后，可否查询到短信的送达状态，这对于一些需要确认短信是否送达的场景是非常重要的。
+9. 熔断机制：某个服务商发送失败太多次，则不再重试，并且剔除服务

@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
  * @date 2024-01-23 15:37:17
  */
 @Data
-@TableName("cp_sms_history")
+@TableName("sms_history")
 @Accessors(chain = true)
 public class SmsHistoryEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
