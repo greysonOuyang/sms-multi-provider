@@ -16,7 +16,7 @@ import java.util.Date;
  * @date 2024-01-12 11:02:58
  */
 @Data
-@TableName("sms_template")
+//@TableName("sms_template")
 public class SmsTemplateEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 

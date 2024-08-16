@@ -13,6 +13,6 @@ public class MessageConfiguration {
 
     private String provider;
     private String propertiesPath; // 用于存储配置文件路径的属性
-    private DataSource dataSource; // 如果使用数据库，这可能是一个DataSource Bean
+//    private DataSource dataSource; // 如果使用数据库，这可能是一个DataSource Bean
 
 }

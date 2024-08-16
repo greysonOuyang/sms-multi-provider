@@ -12,7 +12,6 @@ public class RandomLoadBalancerStrategy implements LoadBalancerStrategy {
 
     private final Random random = new Random();
 
-
     @Override
     public SmsProvider choose(List<SmsProvider> providers) {
         int pos = random.nextInt(providers.size());
