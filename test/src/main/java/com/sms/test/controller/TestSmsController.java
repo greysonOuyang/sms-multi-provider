@@ -27,7 +27,8 @@ public class TestSmsController {
 
     @GetMapping("/send")
     public String send() {
-        SmsRequest smsRequest = SmsRequest.builder().phoneNumber("15270661017").build();
+        SmsRequest smsRequest = SmsRequest.builder().phoneNumber("15270661017").signName("海南省互联网医疗监管平台").message("测试短信").templateCode("SMS_464755303")
+                .build();
         try {
             smsFacade.sendByTemplateSimple(smsRequest);
         } catch (SmsSendException e) {
