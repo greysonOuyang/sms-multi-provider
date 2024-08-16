@@ -2,37 +2,39 @@ sms:
   queue:
     # 开启kafka队列
     enabled: false
-    # kafka地址
-    kafkaAddress:
   # 是否开启短信记录
   history:
     enabled: false
   # 短信服务商
   provider:
-    selected: "aliyun"
+    selected: aliyun
     aliyun:
-      accessKeyId: "xxx"
-      accessKeySecret: "xxx"
-      domain: "dysmsapi.aliyuncs.com"
-      signName: "xxx"
+      domain: dysmsapi.aliyuncs.com
+      accessKeyId:
+      accessKeySecret:
+      signName:
   # 短信模板配置形式
   template:
     type: config
   # 负载均衡配置
   load-balance:
     isEnabled: true
-    balancer: "random"
+    balancer: random
+  # 失败重试机制
+#  retry:
+#    enabled: # 默认 false 关闭
+#    limit:  # 立即重试次数，不设置默认为3次
+#    maxRetryTimes: #最大重试次数
+#    fixedDelay: # 默认5000 单位ms，每隔多少时间重试一次
 
-spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://10.0.23.26:31236/hi-clip-dev?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8&autoReconnect=true&failOverReadOnly=false
-    username: devHos
-    password: devHos@123
-  kafka:
-    consumer:
-      group-id: your-group-id
-
+#spring:
+#  kafka:
+#    consumer:
+#      group-id: your-group-id
+#    bootstrap-servers: localhost:9092
+logging:
+  level:
+    root: INFO
 #spring:
 #  datasource:
 #    enabled: false
