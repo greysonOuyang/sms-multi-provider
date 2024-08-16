@@ -1,5 +1,6 @@
 package com.sms.facade.queue;
 
+import com.alibaba.fastjson2.JSON;
 import com.sms.api.domain.BatchSmsRequest;
 import com.sms.api.domain.SmsRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +19,12 @@ import org.springframework.stereotype.Service;
 public class KafkaSmsProducer {
 
 
-    @Autowired
-    private KafkaTemplate<String, SmsRequest> kafkaTemplate;
+    private final KafkaTemplate<String, String> kafkaTemplate;
 
     @Autowired
-    private KafkaTemplate<String, BatchSmsRequest> kafkaTemplate2;
-
+    public KafkaSmsProducer(KafkaTemplate<String, String> kafkaTemplate) {
+        this.kafkaTemplate = kafkaTemplate;
+    }
 
 
     /**
@@ -31,10 +32,10 @@ public class KafkaSmsProducer {
      * @param smsTarget
      */
     public void handlerTemplateSms(SmsRequest smsTarget) {
-        kafkaTemplate.send("kafka.topic.single", smsTarget);
+        kafkaTemplate.send("kafka.topic.single", JSON.toJSONString(smsTarget));
     }
 
     public void handlerTemplateSmsMulti(BatchSmsRequest batchSmsRequest) {
-        kafkaTemplate2.send("kafka.topic.multi", batchSmsRequest);
+        kafkaTemplate.send("kafka.topic.multi", JSON.toJSONString(batchSmsRequest));
     }
 }
