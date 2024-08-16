@@ -34,7 +34,7 @@ public class ProviderConfig {
     @Autowired
     private ApplicationContext context;
 
-    private static List<SmsProvider> providers = new ArrayList<>();
+    private List<SmsProvider> providers = new ArrayList<>();
 
     @PostConstruct
     public void initProviders() {

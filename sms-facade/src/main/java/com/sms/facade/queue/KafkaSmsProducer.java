@@ -17,9 +17,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class KafkaSmsProducer {
 
+
     @Autowired
     private KafkaTemplate<String, SmsRequest> kafkaTemplate;
+
+    @Autowired
     private KafkaTemplate<String, BatchSmsRequest> kafkaTemplate2;
+
 
 
     /**

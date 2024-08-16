@@ -1,5 +1,6 @@
 package com.sms.facade.service;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
@@ -32,7 +33,7 @@ import java.util.Map;
 @Service
 public class RequestHelperServiceImpl implements RequestHelperService {
 
-    @Value("${sms.template.type:config")
+    @Value("${sms.template.type:config}")
     private String templateConfig;
 
 
@@ -68,7 +69,7 @@ public class RequestHelperServiceImpl implements RequestHelperService {
         } else {
             smsRequest.setParams(String.join(",", paramValues));
         }
-        if (CollectionUtil.isEmpty(smsRequest.getTemplateParams()) && StringUtils.isEmpty(smsRequest.getParams())) {
+        if (CollUtil.isEmpty(smsRequest.getTemplateParams()) && StringUtils.isEmpty(smsRequest.getParams())) {
             throw new SmsCommonException("没有成功设置模板参数，请检查");
         }
         return smsRequest;

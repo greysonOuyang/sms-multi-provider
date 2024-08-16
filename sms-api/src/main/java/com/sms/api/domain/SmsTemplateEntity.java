@@ -10,9 +10,9 @@ import java.util.Date;
 
 /**
  * 短信模板
- * 
+ *
  * @author greyson
- * @email  
+ * @email
  * @date 2024-01-12 11:02:58
  */
 @Data
@@ -23,7 +23,7 @@ public class SmsTemplateEntity implements Serializable {
 	/**
 	 * 模板唯一标识
 	 */
-	@TableId(type = IdType.AUTO)
+//	@TableId(type = IdType.AUTO)
 	private Long id;
 	/**
 	 * 模板名字
