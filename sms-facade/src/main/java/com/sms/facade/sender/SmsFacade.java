@@ -18,14 +18,14 @@ import org.springframework.stereotype.Service;
 public class SmsFacade {
 
     //获取发送短信是否使用队列的配置
-    @Value("${sms.queue}")
+    @Value("${sms.queue.enabled}")
     private boolean enableQueue;
 
     @Autowired
     private SmsTrulySender smsTrulySender;
 
-    @Autowired
-    private TemplateMessageBuilder templateMessageBuilder;
+//    @Autowired
+//    private TemplateMessageBuilder templateMessageBuilder;
 
     @Autowired
     private RequestHelperService requestHelperService;

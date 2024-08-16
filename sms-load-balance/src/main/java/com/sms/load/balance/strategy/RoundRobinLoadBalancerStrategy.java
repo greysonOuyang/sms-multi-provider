@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@Component("roundRobin")
+@Component
 public class RoundRobinLoadBalancerStrategy implements LoadBalancerStrategy {
 
     private final AtomicInteger position = new AtomicInteger();

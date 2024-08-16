@@ -2,6 +2,7 @@ package com.sms.service.provider.config;
 
 import com.sms.api.SmsProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -22,11 +23,12 @@ import java.util.List;
  * Time: 15:11
  */
 @Configuration
-@ConfigurationProperties(prefix = "sms.base.provider")
+//@ConfigurationProperties(prefix = "sms.base.provider")
 public class ProviderConfig {
     /**
      * 选择启用的服务商
      */
+    @Value("${sms.provider.selected}")
     private String selected;
 
     @Autowired

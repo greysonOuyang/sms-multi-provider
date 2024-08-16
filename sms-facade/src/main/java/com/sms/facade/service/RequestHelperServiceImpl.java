@@ -12,8 +12,10 @@ import com.sms.facade.enums.ParamTypeEnum;
 import com.sms.load.balance.LoadBalancerManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,11 +32,26 @@ import java.util.Map;
 @Service
 public class RequestHelperServiceImpl implements RequestHelperService {
 
+    @Value("${sms.template.type:config")
+    private String templateConfig;
+
+
+    private final Map<String, TemplateConfiguration> templateConfigurations;
+
     @Autowired
+    public RequestHelperServiceImpl(Map<String, TemplateConfiguration> templateConfigurations) {
+        this.templateConfigurations = templateConfigurations;
+    }
+
     private TemplateConfiguration templateConfiguration;
 
     @Autowired
     private LoadBalancerManager loadBalancerManager;
+
+    @PostConstruct
+    public void setTemplateConfiguration() {
+        templateConfiguration = templateConfigurations.get(templateConfig + "TemplateConfiguration");
+    }
 
 
     @Override

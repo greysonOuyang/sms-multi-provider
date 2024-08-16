@@ -6,9 +6,12 @@ import com.sms.service.provider.ProviderManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Author: greyson
@@ -20,16 +23,51 @@ import java.util.List;
 @Service
 public class LoadBalancerManager {
 
-    @Value("${load.balance.isEnabled}")
+    @Value("${sms.load-balance.isEnabled}")
     private boolean loadBalanceIsEnabled;
 
+    private final ApplicationContext context;
+    private final Map<String, LoadBalancerStrategy> strategies;
 
-    @Autowired
     private LoadBalancerStrategy loadBalancerStrategy;
 
 
     @Autowired
     private ProviderManager providerManager;
+
+    @Value("${sms.load-balancer:random}")
+    private String userConfigStrategyName;
+
+    @Autowired
+    public LoadBalancerManager(ApplicationContext context, Map<String, LoadBalancerStrategy> strategies) {
+        this.context = context;
+        this.strategies = strategies;
+    }
+
+    @PostConstruct
+    public void init() {
+        if (loadBalanceIsEnabled) {
+            log.info("loading load-balance strategy...");
+            loadBalancerStrategy = getStrategy();
+        }
+    }
+
+    public LoadBalancerStrategy getStrategy() {
+        String beanName = userConfigStrategyName + "LoadBalancerStrategy";
+        if (strategies.containsKey(beanName)) {
+            return strategies.get(beanName);
+        }
+
+        try {
+            Class<?> clazz = Class.forName(userConfigStrategyName);
+            LoadBalancerStrategy strategy = (LoadBalancerStrategy) context.getAutowireCapableBeanFactory().createBean(clazz);
+            strategies.put(userConfigStrategyName, strategy);
+            return strategy;
+        } catch (ClassNotFoundException e) {
+            throw new IllegalArgumentException("Unknown strategy: " + userConfigStrategyName, e);
+        }
+    }
+
 
     public String currentProviderName() {
         return getProvider().getName();
