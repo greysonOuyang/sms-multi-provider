@@ -23,15 +23,19 @@ sms:
     isEnabled: true
     balancer: "random"
 
-#spring:
-#  datasource:
-#    url: asadd
-#    username:
-#    password:
-#    driver-class-name:
 spring:
   datasource:
-    enabled: false
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://10.0.23.26:31236/hi-clip-dev?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8&autoReconnect=true&failOverReadOnly=false
+    username: devHos
+    password: devHos@123
+  kafka:
+    consumer:
+      group-id: your-group-id
+
+#spring:
+#  datasource:
+#    enabled: false
 
 
 # 短信模板配置
