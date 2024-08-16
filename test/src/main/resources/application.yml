@@ -23,6 +23,16 @@ sms:
     isEnabled: true
     balancer: "random"
 
+#spring:
+#  datasource:
+#    url: asadd
+#    username:
+#    password:
+#    driver-class-name:
+spring:
+  datasource:
+    enabled: false
+
 
 # 短信模板配置
 templates:
