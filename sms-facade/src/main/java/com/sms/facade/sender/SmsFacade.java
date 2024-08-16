@@ -1,7 +1,5 @@
 package com.sms.facade.sender;
 
-import com.sms.api.RequestHelperService;
-import com.sms.api.TemplateMessageBuilder;
 import com.sms.api.domain.BatchSmsRequest;
 import com.sms.api.domain.SmsRequest;
 import com.sms.api.exception.SmsCommonException;
@@ -23,12 +21,6 @@ public class SmsFacade {
 
     @Autowired
     private SmsTrulySender smsTrulySender;
-
-//    @Autowired
-//    private TemplateMessageBuilder templateMessageBuilder;
-
-    @Autowired
-    private RequestHelperService requestHelperService;
 
     @Autowired
     private KafkaSmsProducer kafkaSmsProducer;

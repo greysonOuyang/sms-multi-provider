@@ -31,7 +31,7 @@
         <kafka.version>2.7.14</kafka.version>
         <lombok.version>1.18.30</lombok.version>
         <logback.version>1.5.3</logback.version>
-        <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
+<!--        <mybatis-plus.version>3.5.3.1</mybatis-plus.version>-->
 
     </properties>
 
@@ -96,18 +96,6 @@
                 <groupId>com.alibaba.fastjson2</groupId>
                 <artifactId>fastjson2</artifactId>
                 <version>2.0.23</version>
-            </dependency>
-            <!-- mybatis-plus -->
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-boot-starter</artifactId>
-                <version>${mybatis-plus.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-extension</artifactId>
-                <version>${mybatis-plus.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.aliyun</groupId>
