@@ -43,6 +43,7 @@ public class LoadBalancerManager {
     }
 
     public SmsProvider getProvider() throws RuntimeException {
+        log.info("load balance is enabled: {}", loadBalanceIsEnabled);
         List<SmsProvider> availableProviders = providerManager.getAvailableProviders();
         if(availableProviders.isEmpty()) {
             throw new RuntimeException("No available providers.");

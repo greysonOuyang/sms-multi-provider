@@ -28,7 +28,7 @@
         <lombok.version>1.18.30</lombok.version>
         <logback.version>1.5.3</logback.version>
         <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
-
+        <spring.rabbit.version>2.4.7</spring.rabbit.version>
     </properties>
 
     <dependencyManagement>
@@ -83,6 +83,11 @@
                 <artifactId>spring-kafka</artifactId>
                 <version>${kafka.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.springframework.amqp</groupId>
+                <artifactId>spring-rabbit</artifactId>
+                <version>${spring.rabbit.version}</version>
+            </dependency>
             <!--            <dependency>-->
             <!--                <groupId>ch.qos.logback</groupId>-->
             <!--                <artifactId>logback-classic</artifactId>-->
@@ -109,6 +114,11 @@
                 <groupId>com.aliyun</groupId>
                 <artifactId>alibabacloud-dysmsapi20170525</artifactId>
                 <version>2.0.24</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>2.15.3</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
