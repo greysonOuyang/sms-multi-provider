@@ -14,7 +14,6 @@
         <module>sms-service</module>
         <module>sms-load-balance</module>
         <module>sms-facade</module>
-        <module>sms-test</module>
     </modules>
 
     <properties>
@@ -88,11 +87,6 @@
                 <artifactId>spring-rabbit</artifactId>
                 <version>${spring.rabbit.version}</version>
             </dependency>
-            <!--            <dependency>-->
-            <!--                <groupId>ch.qos.logback</groupId>-->
-            <!--                <artifactId>logback-classic</artifactId>-->
-            <!--                <version>${logback.version}</version>-->
-            <!--            </dependency>-->
             <dependency>
                 <groupId>com.alibaba.fastjson2</groupId>
                 <artifactId>fastjson2</artifactId>

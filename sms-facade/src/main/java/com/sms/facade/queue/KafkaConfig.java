@@ -1,7 +1,5 @@
 package com.sms.facade.queue;
 
-import com.sms.api.domain.BatchSmsRequest;
-import com.sms.api.domain.SmsRequest;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
