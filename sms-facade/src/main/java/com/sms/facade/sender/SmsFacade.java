@@ -1,12 +1,12 @@
 package com.sms.facade.sender;
 
 import com.sms.api.RequestHelperService;
+import com.sms.api.SmsProducer;
 import com.sms.api.TemplateMessageBuilder;
 import com.sms.api.domain.BatchSmsRequest;
 import com.sms.api.domain.SmsRequest;
 import com.sms.api.exception.SmsCommonException;
 import com.sms.api.exception.SmsSendException;
-import com.sms.facade.queue.SmsProducer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
