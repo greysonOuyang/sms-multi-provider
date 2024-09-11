@@ -1,7 +1,7 @@
 package org.moretea.sms.load.balance.strategy;
 
-import com.sms.api.LoadBalancerStrategy;
-import com.sms.api.SmsProvider;
+import org.moretea.sms.api.LoadBalancerStrategy;
+import org.moretea.sms.api.SmsProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;

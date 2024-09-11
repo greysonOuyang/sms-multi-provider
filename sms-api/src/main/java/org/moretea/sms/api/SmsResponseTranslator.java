@@ -1,7 +1,7 @@
-package com.sms.api;
+package org.moretea.sms.api;
 
-import com.sms.api.domain.SmsRequest;
-import com.sms.api.domain.SmsResponse;
+import org.moretea.sms.api.domain.SmsRequest;
+import org.moretea.sms.api.domain.SmsResponse;
 
 import java.util.concurrent.CompletableFuture;
 

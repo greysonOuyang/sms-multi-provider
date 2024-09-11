@@ -1,9 +1,9 @@
 package org.moretea.sms.service.provider.tianyiyun;
 
-import com.sms.api.AbstractSmsProvider;
-import com.sms.api.domain.SmsRequest;
-import com.sms.api.domain.SmsResponse;
-import com.sms.api.exception.SmsSendException;
+import org.moretea.sms.api.AbstractSmsProvider;
+import org.moretea.sms.api.domain.SmsRequest;
+import org.moretea.sms.api.domain.SmsResponse;
+import org.moretea.sms.api.exception.SmsSendException;
 import org.moretea.sms.service.provider.config.SmsProviderProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

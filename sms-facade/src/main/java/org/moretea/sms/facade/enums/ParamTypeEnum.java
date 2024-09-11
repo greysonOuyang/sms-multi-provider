@@ -1,4 +1,4 @@
-package com.sms.facade.enums;
+package org.moretea.sms.facade.enums;
 
 public enum ParamTypeEnum {
     LIST("List"),

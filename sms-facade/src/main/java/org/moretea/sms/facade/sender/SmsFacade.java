@@ -1,12 +1,12 @@
-package com.sms.facade.sender;
+package org.moretea.sms.facade.sender;
 
-import com.sms.api.RequestHelperService;
-import com.sms.api.SmsProducer;
-import com.sms.api.TemplateMessageBuilder;
-import com.sms.api.domain.BatchSmsRequest;
-import com.sms.api.domain.SmsRequest;
-import com.sms.api.exception.SmsCommonException;
-import com.sms.api.exception.SmsSendException;
+import org.moretea.sms.api.RequestHelperService;
+import org.moretea.sms.api.SmsProducer;
+import org.moretea.sms.api.TemplateMessageBuilder;
+import org.moretea.sms.api.domain.BatchSmsRequest;
+import org.moretea.sms.api.domain.SmsRequest;
+import org.moretea.sms.api.exception.SmsCommonException;
+import org.moretea.sms.api.exception.SmsSendException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

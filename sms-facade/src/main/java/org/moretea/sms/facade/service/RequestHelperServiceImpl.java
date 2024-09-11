@@ -1,15 +1,15 @@
-//package com.sms.facade.service;
+//package org.moretea.sms.facade.service;
 //
 //import cn.hutool.core.collection.CollUtil;
 //import cn.hutool.core.text.CharSequenceUtil;
 //import cn.hutool.core.util.IdUtil;
-//import com.sms.api.RequestHelperService;
-//import com.sms.api.TemplateConfiguration;
-//import com.sms.api.domain.SmsRequest;
-//import com.sms.api.domain.SmsTemplateEntity;
-//import com.sms.api.exception.SmsCommonException;
-//import com.sms.facade.enums.ParamTypeEnum;
-//import com.sms.load.balance.LoadBalancerManager;
+//import org.moretea.sms.api.RequestHelperService;
+//import org.moretea.sms.api.TemplateConfiguration;
+//import org.moretea.sms.api.domain.SmsRequest;
+//import org.moretea.sms.api.domain.SmsTemplateEntity;
+//import org.moretea.sms.api.exception.SmsCommonException;
+//import org.moretea.sms.facade.enums.ParamTypeEnum;
+//import org.moretea.sms.load.balance.LoadBalancerManager;
 //import lombok.extern.slf4j.Slf4j;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.beans.factory.annotation.Value;

@@ -1,7 +1,7 @@
 package org.moretea.sms.service.templates;
 
-import com.sms.api.TemplateConfiguration;
-import com.sms.api.domain.SmsTemplateEntity;
+import org.moretea.sms.api.TemplateConfiguration;
+import org.moretea.sms.api.domain.SmsTemplateEntity;
 import org.moretea.sms.service.templates.domain.Configuration;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.EnableScheduling;

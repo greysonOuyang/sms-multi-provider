@@ -1,8 +1,8 @@
 package org.moretea.sms.service.provider.aliyun;
 
 import com.aliyun.sdk.service.dysmsapi20170525.models.SendSmsRequest;
-import com.sms.api.SmsRequestTranslator;
-import com.sms.api.domain.SmsRequest;
+import org.moretea.sms.api.SmsRequestTranslator;
+import org.moretea.sms.api.domain.SmsRequest;
 import org.springframework.stereotype.Service;
 
 /**

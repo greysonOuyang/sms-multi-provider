@@ -1,8 +1,8 @@
-package com.sms.api;
+package org.moretea.sms.api;
 
-import com.sms.api.domain.BatchSmsRequest;
-import com.sms.api.domain.SmsRequest;
-import com.sms.api.exception.SmsCommonException;
+import org.moretea.sms.api.domain.BatchSmsRequest;
+import org.moretea.sms.api.domain.SmsRequest;
+import org.moretea.sms.api.exception.SmsCommonException;
 
 public interface SmsProducer {
     void sendTemplateSms(SmsRequest smsRequest) throws SmsCommonException;

@@ -1,7 +1,7 @@
 package org.moretea.sms.load.balance.strategy.example;
 
-import com.sms.api.LoadBalancerStrategy;
-import com.sms.api.SmsProvider;
+import org.moretea.sms.api.LoadBalancerStrategy;
+import org.moretea.sms.api.SmsProvider;
 
 import java.util.List;
 

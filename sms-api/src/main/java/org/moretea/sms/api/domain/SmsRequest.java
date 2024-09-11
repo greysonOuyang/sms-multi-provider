@@ -1,6 +1,6 @@
-package com.sms.api.domain;
+package org.moretea.sms.api.domain;
 
-import com.sms.api.SmsProvider;
+import org.moretea.sms.api.SmsProvider;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

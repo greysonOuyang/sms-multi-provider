@@ -2,10 +2,10 @@ package org.moretea.sms.service.provider.aliyun;
 
 import com.aliyun.sdk.service.dysmsapi20170525.models.SendSmsRequest;
 import com.aliyun.sdk.service.dysmsapi20170525.models.SendSmsResponse;
-import com.sms.api.SmsRequestTranslator;
-import com.sms.api.SmsResponseTranslator;
-import com.sms.api.domain.SmsRequest;
-import com.sms.api.domain.SmsResponse;
+import org.moretea.sms.api.SmsRequestTranslator;
+import org.moretea.sms.api.SmsResponseTranslator;
+import org.moretea.sms.api.domain.SmsRequest;
+import org.moretea.sms.api.domain.SmsResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

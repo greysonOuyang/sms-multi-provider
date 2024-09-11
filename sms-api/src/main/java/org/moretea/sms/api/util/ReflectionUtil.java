@@ -1,4 +1,4 @@
-package com.sms.api.util;
+package org.moretea.sms.api.util;
 
 import java.lang.reflect.Constructor;
 

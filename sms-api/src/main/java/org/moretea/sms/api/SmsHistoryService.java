@@ -1,10 +1,10 @@
-//package com.sms.api;
+//package org.moretea.sms.api;
 //
 //
 //import com.baomidou.mybatisplus.extension.service.IService;
-//import com.sms.api.domain.BatchSmsRequest;
-//import com.sms.api.domain.SmsHistoryEntity;
-//import com.sms.api.domain.SmsResponse;
+//import org.moretea.sms.api.domain.BatchSmsRequest;
+//import org.moretea.sms.api.domain.SmsHistoryEntity;
+//import org.moretea.sms.api.domain.SmsResponse;
 //
 //import java.util.List;
 //import java.util.concurrent.CompletableFuture;

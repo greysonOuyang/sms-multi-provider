@@ -1,8 +1,8 @@
 package org.moretea.sms.load.balance;
 
-import com.sms.api.LoadBalancerStrategy;
-import com.sms.api.SmsProvider;
-import com.sms.service.provider.ProviderManager;
+import org.moretea.sms.api.LoadBalancerStrategy;
+import org.moretea.sms.api.SmsProvider;
+import org.moretea.sms.service.provider.ProviderManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

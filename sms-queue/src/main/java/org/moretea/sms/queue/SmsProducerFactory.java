@@ -1,6 +1,6 @@
 package org.moretea.sms.queue;
 
-import com.sms.api.SmsProducer;
+import org.moretea.sms.api.SmsProducer;
 import org.moretea.sms.queue.kafka.KafkaSmsProducer;
 import org.moretea.sms.queue.rabbitmq.RabbitMQSmsProducer;
 import org.springframework.beans.factory.annotation.Value;

@@ -1,12 +1,12 @@
-//package com.sms.facade.service;
+//package org.moretea.sms.facade.service;
 //
 //import cn.hutool.core.collection.CollectionUtil;
 //import com.alibaba.fastjson2.JSONObject;
 //import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-//import com.sms.api.SmsHistoryService;
-//import com.sms.api.domain.BatchSmsRequest;
-//import com.sms.api.domain.SmsHistoryEntity;
-//import com.sms.facade.mapper.SmsHistoryMapper;
+//import org.moretea.sms.api.SmsHistoryService;
+//import org.moretea.sms.api.domain.BatchSmsRequest;
+//import org.moretea.sms.api.domain.SmsHistoryEntity;
+//import org.moretea.sms.facade.mapper.SmsHistoryMapper;
 //import lombok.extern.slf4j.Slf4j;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.scheduling.annotation.Async;

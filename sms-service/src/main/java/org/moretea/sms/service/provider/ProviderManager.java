@@ -1,6 +1,6 @@
 package org.moretea.sms.service.provider;
 
-import com.sms.api.SmsProvider;
+import org.moretea.sms.api.SmsProvider;
 import org.moretea.sms.service.provider.config.ProviderConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

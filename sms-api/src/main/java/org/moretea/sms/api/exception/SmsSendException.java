@@ -1,4 +1,4 @@
-package com.sms.api.exception;
+package org.moretea.sms.api.exception;
 
 /**
  * 发送短信异常

@@ -1,4 +1,4 @@
-package com.sms.api;
+package org.moretea.sms.api;
 
 public abstract class AbstractSmsProvider implements SmsProvider {
     private boolean available = true;

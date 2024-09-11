@@ -1,6 +1,6 @@
-package com.sms.api;
+package org.moretea.sms.api;
 
-import com.sms.api.domain.SmsTemplateEntity;
+import org.moretea.sms.api.domain.SmsTemplateEntity;
 
 /**
  * 模板配置形式接口

@@ -1,4 +1,4 @@
-package com.sms.api.domain;
+package org.moretea.sms.api.domain;
 
 import lombok.Data;
 

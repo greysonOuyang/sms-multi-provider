@@ -1,6 +1,6 @@
 package org.moretea.sms.service.templates.config;
 
-import com.sms.api.TemplateConfiguration;
+import org.moretea.sms.api.TemplateConfiguration;
 import org.moretea.sms.service.templates.ConfigFileTemplateConfiguration;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

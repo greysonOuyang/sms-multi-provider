@@ -1,10 +1,10 @@
 package org.moretea.sms.queue.rabbitmq;
 
 import com.google.gson.Gson;
-import com.sms.api.SmsProducer;
-import com.sms.api.domain.BatchSmsRequest;
-import com.sms.api.domain.SmsRequest;
-import com.sms.api.exception.SmsCommonException;
+import org.moretea.sms.api.SmsProducer;
+import org.moretea.sms.api.domain.BatchSmsRequest;
+import org.moretea.sms.api.domain.SmsRequest;
+import org.moretea.sms.api.exception.SmsCommonException;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

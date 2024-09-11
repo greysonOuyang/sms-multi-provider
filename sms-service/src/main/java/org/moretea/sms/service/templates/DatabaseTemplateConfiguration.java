@@ -1,9 +1,9 @@
-//package com.sms.service.templates;
+//package org.moretea.sms.service.templates;
 //
 //import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-//import com.sms.api.SmsTemplateService;
-//import com.sms.api.TemplateConfiguration;
-//import com.sms.api.domain.SmsTemplateEntity;
+//import org.moretea.sms.api.SmsTemplateService;
+//import org.moretea.sms.api.TemplateConfiguration;
+//import org.moretea.sms.api.domain.SmsTemplateEntity;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.stereotype.Service;
 //

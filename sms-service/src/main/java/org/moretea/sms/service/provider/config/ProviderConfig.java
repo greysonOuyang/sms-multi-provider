@@ -1,6 +1,6 @@
 package org.moretea.sms.service.provider.config;
 
-import com.sms.api.SmsProvider;
+import org.moretea.sms.api.SmsProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;

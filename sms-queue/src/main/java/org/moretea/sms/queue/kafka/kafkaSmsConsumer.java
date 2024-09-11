@@ -1,8 +1,8 @@
 package org.moretea.sms.queue.kafka;
-import com.sms.api.domain.BatchSmsRequest;
-import com.sms.api.exception.SmsSendException;
-import com.sms.facade.sender.SmsTrulySender;
-import com.sms.api.domain.SmsRequest;
+import org.moretea.sms.api.domain.BatchSmsRequest;
+import org.moretea.sms.api.exception.SmsSendException;
+import org.moretea.sms.facade.sender.SmsTrulySender;
+import org.moretea.sms.api.domain.SmsRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;

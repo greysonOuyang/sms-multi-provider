@@ -1,4 +1,4 @@
-package com.sms.api;
+package org.moretea.sms.api;
 
 import java.util.Collection;
 
