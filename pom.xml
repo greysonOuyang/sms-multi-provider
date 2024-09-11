@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.sms</groupId>
+    <groupId>org.moretea.sms</groupId>
     <artifactId>sms-multi-provider</artifactId>
-    <version>${sms.version}</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <description>多厂商短信服务</description>
     <modules>
@@ -14,27 +14,18 @@
         <module>sms-service</module>
         <module>sms-load-balance</module>
         <module>sms-facade</module>
+        <module>sms-queue</module>
     </modules>
 
-<!--    <parent>-->
-<!--        <groupId>org.springframework.boot</groupId>-->
-<!--        <artifactId>spring-boot-starter-parent</artifactId>-->
-<!--        <version>2.7.18</version>-->
-<!--    </parent>-->
-
     <properties>
-        <sms.version>1.0</sms.version>
         <java.version>1.8</java.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring.boot.version>2.7.18</spring.boot.version>
         <hutool.version>5.8.25</hutool.version>
-        <kafka.version>3.1.1</kafka.version>
         <lombok.version>1.18.30</lombok.version>
         <logback.version>1.5.3</logback.version>
-        <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
-        <spring.rabbit.version>2.4.7</spring.rabbit.version>
     </properties>
 
     <dependencyManagement>
@@ -46,12 +37,6 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!-- SpringBoot的依赖配置-->
-<!--            <dependency>-->
-<!--                <groupId>org.springframework.boot</groupId>-->
-<!--                <artifactId>spring-boot-starter</artifactId>-->
-<!--                <version>${spring.boot.version}</version>-->
-<!--            </dependency>-->
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
@@ -64,53 +49,11 @@
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
             </dependency>
-            <dependency>
-                <groupId>com.sms</groupId>
-                <artifactId>sms-api</artifactId>
-                <version>${sms.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.sms</groupId>
-                <artifactId>sms-facade</artifactId>
-                <version>${sms.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.sms</groupId>
-                <artifactId>sms-load-balance</artifactId>
-                <version>${sms.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.sms</groupId>
-                <artifactId>sms-service</artifactId>
-                <version>${sms.version}</version>
-            </dependency>
-            <!-- Spring Kafka -->
-            <dependency>
-                <groupId>org.springframework.kafka</groupId>
-                <artifactId>spring-kafka</artifactId>
-                <version>${kafka.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.amqp</groupId>
-                <artifactId>spring-rabbit</artifactId>
-                <version>${spring.rabbit.version}</version>
-            </dependency>
+
             <dependency>
                 <groupId>com.alibaba.fastjson2</groupId>
                 <artifactId>fastjson2</artifactId>
                 <version>2.0.23</version>
-            </dependency>
-            <!-- mybatis-plus -->
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-boot-starter</artifactId>
-                <version>${mybatis-plus.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-extension</artifactId>
-                <version>${mybatis-plus.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.aliyun</groupId>
@@ -118,9 +61,19 @@
                 <version>2.0.24</version>
             </dependency>
             <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-databind</artifactId>
-                <version>2.15.3</version>
+                <groupId>com.google.code.gson</groupId>
+                <artifactId>gson</artifactId>
+                <version>2.10.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.kafka</groupId>
+                <artifactId>spring-kafka</artifactId>
+                <version>3.1.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.amqp</groupId>
+                <artifactId>spring-rabbit</artifactId>
+                <version>2.4.5</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
