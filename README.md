@@ -1,17 +1,57 @@
-# INTRODUCE
-该仓库是一个多厂商短信发送平台，由于身体原因，在未完成之际就不得不停手，如有兴趣可在此基础之上完善，如若对您有些许帮助，幸甚之至！
-该短信服务原设想主要支持的功能特性见尾部，目前已实现重试机制、负载均衡、容灾备份等功能的基本代码，代码目前并不能运行，各项配置还未补充完毕。
-持久化、历史记录等功能本已有雏形，但功能也尚未添加。
-综合所看，该仓库代码半成品也算不上，不忍弃之，姑且上传，如错误百出（设计或者思路方面），烦请指出，我仍然可以学习，如是代码错误之处，还请海涵。
+# Multi-Vendor SMS Sending Platform
 
+[中文说明](./README_CN.md)
 
-# 特性
-1. 抽象化：对不同厂商的短信发送接口进行统一的抽象设计，以达到接口一致，方便替换和扩展。
-2. 配置化：每个厂商的服务接口，配置以及模板都可能存在差异，应该包含一个配置中心或配置文件，来管理每个厂商的接口URL、鉴权信息、模板参数等。
-3. 容灾备份：短信服务对时间性的要求较高，一旦某个厂商的服务出现问题，要能够尽快切换到其他厂商。
-4. 负载均衡：如果业务规模较大，可能需要在多个厂商之间进行负载均衡，以充分利用每一个厂商的服务能力。
-5. （TODO）监控报警：设定监控系统，实时收集每个厂商的服务质量数据，比如发送成功率，发送延迟等。一旦某个厂商的服务质量低于预设阈值，则报警并自动切换到其他厂商。日志收集或者数据库
-6. 重试机制：当发送短信失败时，需要有一个重试的机制，比如可以重试N次，每次的间隔时间逐渐增大。
-7. 数据持久化：需要有一套完善的数据持久化方案，例如：使用数据库保存所有发送的短信内容，状态等信息，这样可以用于后期的数据分析和归档。
-8. 状态查询：在短信发送后，可否查询到短信的送达状态，这对于一些需要确认短信是否送达的场景是非常重要的。
-9. 熔断机制：某个服务商发送失败太多次，则不再重试，并且剔除服务
+---
+
+## Introduction
+This repository provides a **multi-vendor SMS sending platform**, designed to support seamless integration with different SMS service providers.  
+It currently includes core implementations for **retry mechanisms**, **load balancing**, and **disaster recovery**, though the codebase is **not yet runnable** since configuration and setup files are still incomplete.
+
+Initial designs for **persistence** and **message history tracking** have also been included, but are not yet functional.
+
+---
+
+## Features
+1. **Abstraction Layer**  
+   Provides a unified interface for different SMS vendor APIs, ensuring consistency and ease of replacement or extension.
+
+2. **Configuration Management**  
+   Each vendor may have unique API endpoints, authentication methods, and template formats.  
+   A centralized configuration system or file should manage parameters such as URLs, credentials, and template definitions.
+
+3. **Disaster Recovery**  
+   Since SMS delivery is time-sensitive, if one vendor’s service fails, the system should quickly switch to another available provider.
+
+4. **Load Balancing**  
+   For large-scale applications, distribute requests across multiple vendors to maximize throughput and stability.
+
+5. **(TODO) Monitoring & Alerts**  
+   Implement real-time monitoring to collect metrics such as success rates and delivery latency.  
+   If a vendor’s performance drops below a threshold, trigger alerts and automatically reroute messages.  
+   Logs or database tracking should support this feature.
+
+6. **Retry Mechanism**  
+   When message sending fails, retry up to N times with exponential backoff or adjustable intervals.
+
+7. **Data Persistence**  
+   Store all message details — including content, status, and metadata — in a database for later analysis and archiving.
+
+8. **Delivery Status Tracking**  
+   Enable querying of message delivery states, crucial for cases that require confirmation of receipt.
+
+9. **Circuit Breaker**  
+   If a vendor repeatedly fails beyond a threshold, temporarily remove it from the rotation to protect overall stability.
+
+---
+
+## Roadmap
+- [ ] Complete configuration system
+- [ ] Add database persistence layer
+- [ ] Implement monitoring dashboard
+- [ ] Provide unified API documentation
+
+---
+
+## License
+MIT License
