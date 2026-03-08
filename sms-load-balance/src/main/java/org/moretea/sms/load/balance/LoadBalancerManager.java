@@ -5,37 +5,35 @@ import org.moretea.sms.api.SmsProvider;
 import org.moretea.sms.service.provider.ProviderManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 /**
- * Author: greyson
- * Email:  
- * Date: 2024/3/14
- * Time: 17:32
+ * 负载均衡管理器
+ *
+ * @author greyson
+ * @since 1.0.0
  */
 @Slf4j
 @Service
 public class LoadBalancerManager {
 
-    @Value("${sms.load-balance.isEnabled}")
-    private boolean loadBalanceIsEnabled;
+    @Autowired
+    private org.moretea.sms.api.config.SmsProperties smsProperties;
 
     private final ApplicationContext context;
     private final Map<String, LoadBalancerStrategy> strategies;
 
     private LoadBalancerStrategy loadBalancerStrategy;
 
-
     @Autowired
     private ProviderManager providerManager;
 
-    @Value("${sms.load-balancer:random}")
     private String userConfigStrategyName;
 
     @Autowired
@@ -46,8 +44,9 @@ public class LoadBalancerManager {
 
     @PostConstruct
     public void init() {
-        if (loadBalanceIsEnabled) {
-            log.info("loading load-balance strategy...");
+        this.userConfigStrategyName = smsProperties.getLoadBalance().getStrategy();
+        if (smsProperties.getLoadBalance().isEnabled()) {
+            log.info("loading load-balance strategy: {}", userConfigStrategyName);
             loadBalancerStrategy = getStrategy();
         }
     }
@@ -74,30 +73,40 @@ public class LoadBalancerManager {
     }
 
     public SmsProvider currentProvider() {
-        if (getProvider() == null) {
+        SmsProvider provider = getProvider();
+        if (provider == null) {
             throw new RuntimeException("Can't get a sms provider, please check config or make sure provider is available");
         }
-        return getProvider();
+        return provider;
     }
 
     public SmsProvider getProvider() throws RuntimeException {
-        log.info("load balance is enabled: {}", loadBalanceIsEnabled);
+        boolean loadBalanceEnabled = smsProperties.getLoadBalance().isEnabled();
+        log.debug("load balance is enabled: {}", loadBalanceEnabled);
+
         List<SmsProvider> availableProviders = providerManager.getAvailableProviders();
-        if(availableProviders.isEmpty()) {
+        if (availableProviders.isEmpty()) {
             throw new RuntimeException("No available providers.");
-        } else {
-            if (!loadBalanceIsEnabled) {
-                return availableProviders.get(0);
+        }
+
+        List<SmsProvider> healthyProviders = new ArrayList<>();
+        for (SmsProvider provider : availableProviders) {
+            if (provider.isHealthy()) {
+                healthyProviders.add(provider);
             } else {
-                SmsProvider provider = loadBalancerStrategy.choose(availableProviders);
-                if (provider.isHealthy()) {
-                    return provider;
-                } else {
-                    providerManager.handleFailure(provider);
-                    return getProvider();
-                }
+                providerManager.handleFailure(provider);
             }
         }
+
+        if (healthyProviders.isEmpty()) {
+            throw new RuntimeException("No healthy providers available.");
+        }
+
+        if (!loadBalanceEnabled) {
+            return healthyProviders.get(0);
+        }
+
+        return loadBalancerStrategy.choose(healthyProviders);
     }
 
 }

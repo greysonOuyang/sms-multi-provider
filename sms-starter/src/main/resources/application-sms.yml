@@ -1,0 +1,60 @@
+# SMS Multi Provider 完整配置示例
+
+sms:
+  # ==================== 厂商配置 ====================
+  providers:
+    # 阿里云短信
+    aliyun:
+      enabled: true                          # 是否启用（默认 true）
+      access-key-id: ${ALIYUN_ACCESS_KEY_ID:your-access-key-id}
+      access-key-secret: ${ALIYUN_ACCESS_KEY_SECRET:your-access-key-secret}
+      domain: ${ALIYUN_DOMAIN:dysmsapi.aliyuncs.com}
+      sign-name: ${ALIYUN_SIGN_NAME:阿里云短信测试}  # 默认签名
+      weight: 10                             # 负载均衡权重（默认 10）
+      
+    # 天翼云短信
+    ctyun:
+      enabled: true                          # 是否启用（默认 true）
+      access-key: ${CTYUN_ACCESS_KEY:your-access-key}
+      secret-key: ${CTYUN_SECRET_KEY:your-secret-key}
+      api-url: ${CTYUN_API_URL:https://sms-global.ctapi.ctyun.cn/sms/api/v1/send}
+      sign-name: ${CTYUN_SIGN_NAME:天翼云短信}       # 默认签名
+      weight: 5                              # 负载均衡权重（默认 5）
+
+  # ==================== 模板配置 ====================
+  template:
+    # 模板读取模式：config (配置文件) / database (数据库)
+    mode: config
+
+  # ==================== 负载均衡配置 ====================
+  load-balance:
+    enabled: true                            # 是否启用负载均衡
+    strategy: weighted                       # 策略：random / round-robin / weighted
+
+  # ==================== 重试配置 ====================
+  retry:
+    enabled: true                            # 是否启用重试
+    immediate-limit: 3                       # 立即重试次数（默认 3）
+    max-retry-times: 10                      # 最大重试次数（默认 10）
+    fixed-delay: 5000                        # 延迟重试间隔，单位毫秒（默认 5000）
+
+  # ==================== 熔断配置 ====================
+  failure:
+    threshold: 10                            # 失败阈值（默认 10）
+    window-time: 60                          # 时间窗口，单位秒（默认 60）
+    recovery-time: 5                         # 恢复时间，单位分钟（默认 5）
+
+  # ==================== 队列配置 ====================
+  queue:
+    enabled: false                           # 是否启用消息队列（默认 false）
+    type: kafka                              # 队列类型：kafka / rabbitmq
+    kafka:
+      topic: sms-send-topic
+    rabbitmq:
+      exchange: sms.exchange
+      routing-key: sms.send
+
+  # ==================== 历史记录配置 ====================
+  history:
+    enabled: false                           # 是否启用历史记录（默认 false）
+    retention-days: 90                       # 数据保留天数（默认 90）

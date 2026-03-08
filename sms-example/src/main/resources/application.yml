@@ -1,0 +1,58 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: sms-example
+
+# 短信服务配置
+sms:
+  provider:
+    # 启用的服务商列表（与 ProviderConfig 兼容）
+    selected: aliyun
+
+  # 厂商配置（请替换为真实的密钥）
+  providers:
+    aliyun:
+      enabled: false  # 默认关闭，需要配置真实密钥后启用
+      access-key-id: ${ALIYUN_ACCESS_KEY_ID:demo_access_key_id}
+      access-key-secret: ${ALIYUN_ACCESS_KEY_SECRET:demo_access_key_secret}
+      sign-name: 阿里云短信测试
+      weight: 10
+      
+    ctyun:
+      enabled: false  # 默认关闭，需要配置真实密钥后启用
+      access-key: ${CTYUN_ACCESS_KEY:demo_access_key}
+      secret-key: ${CTYUN_SECRET_KEY:demo_secret_key}
+      sign-name: 天翼云短信
+      weight: 5
+
+  # 负载均衡
+  load-balance:
+    enabled: true
+    strategy: weighted
+
+  # 重试配置
+  retry:
+    enabled: true
+    immediate-limit: 3
+    max-retry-times: 10
+    fixed-delay: 5000
+
+# 日志配置
+logging:
+  level:
+    org.moretea.sms: DEBUG
+    org.springframework.web: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+# Actuator 健康检查
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always

@@ -1,0 +1,138 @@
+# ===========================================
+# 短信平台配置示例
+# ===========================================
+
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: sms-platform
+
+  # 数据库配置（可选，用于历史记录存储）
+  datasource:
+    url: jdbc:mysql://localhost:3306/sms_platform?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false
+    username: ${DB_USER:root}
+    password: ${DB_PASSWORD:}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+
+# ===========================================
+# 短信平台核心配置
+# ===========================================
+sms:
+  # -------------------------------------------
+  # 服务商配置
+  # 支持多个厂商，用逗号分隔，如: aliyun,ctyun
+  # -------------------------------------------
+  provider:
+    selected: aliyun
+
+  providers:
+    # 阿里云短信配置
+    aliyun:
+      access-key-id: ${ALIYUN_ACCESS_KEY_ID:}
+      access-key-secret: ${ALIYUN_ACCESS_KEY_SECRET:}
+      domain: dysmsapi.aliyuncs.com
+      sign-name: ${ALIYUN_SIGN_NAME:}
+      weight: 10
+
+    # 天翼云短信配置（待完善）
+    ctyun:
+      access-key: ${CTYUN_ACCESS_KEY:}
+      access-secret: ${CTYUN_ACCESS_SECRET:}
+      endpoint: https://sms.ctyun.cn
+      weight: 5
+
+  # -------------------------------------------
+  # 模板配置
+  # mode: database（从数据库读取）| config（从配置文件读取）
+  # -------------------------------------------
+  template:
+    mode: config
+
+  # -------------------------------------------
+  # 负载均衡配置
+  # -------------------------------------------
+  load-balance:
+    enabled: true
+    # 策略: random（随机）| roundRobin（轮询）| weighted（加权）
+    strategy: weighted
+
+  # -------------------------------------------
+  # 重试机制配置
+  # -------------------------------------------
+  retry:
+    # 是否启用重试
+    enabled: true
+    # 快速重试次数（发送失败立即重试）
+    limit: 3
+    # 最大重试次数（包括延迟队列重试）
+    maxRetryTimes: 10
+    # 延迟重试间隔（毫秒）
+    fixedDelay: 5000
+
+  # -------------------------------------------
+  # 熔断配置
+  # 当某厂商在指定时间窗口内失败次数达到阈值，自动熔断
+  # -------------------------------------------
+  failure:
+    # 触发熔断的失败次数阈值
+    threshold: 10
+    # 时间窗口（秒）
+    window-time: 60
+    # 熔断后恢复时间（分钟）
+    recovery-time: 5
+
+  # -------------------------------------------
+  # 消息队列配置（可选）
+  # -------------------------------------------
+  queue:
+    # 是否启用消息队列
+    enabled: false
+    # 队列类型: kafka | rabbitmq
+    type: kafka
+    kafka:
+      topic: sms-send-topic
+
+  # -------------------------------------------
+  # 历史记录配置（可选）
+  # -------------------------------------------
+  history:
+    # 是否启用历史记录存储
+    enabled: false
+
+# ===========================================
+# Actuator 监控配置
+# ===========================================
+management:
+  server:
+    port: 8081
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+# ===========================================
+# 日志配置
+# ===========================================
+logging:
+  level:
+    root: INFO
+    org.moretea.sms: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{50} - %msg%n"

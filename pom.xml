@@ -15,16 +15,19 @@
         <module>sms-load-balance</module>
         <module>sms-facade</module>
         <module>sms-queue</module>
+        <module>sms-starter</module>
+        <!-- 示例项目（不参与构建，需先安装父项目到本地仓库） -->
+        <!-- <module>sms-example</module> -->
     </modules>
 
     <properties>
-        <java.version>1.8</java.version>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <java.version>17</java.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring.boot.version>2.7.18</spring.boot.version>
         <hutool.version>5.8.25</hutool.version>
-        <lombok.version>1.18.30</lombok.version>
+        <lombok.version>1.18.36</lombok.version>
         <logback.version>1.5.3</logback.version>
     </properties>
 
@@ -138,5 +141,27 @@
         </dependency>
 
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.10.1</version>
+                <configuration>
+                    <source>17</source>
+                    <target>17</target>
+                    <encoding>UTF-8</encoding>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

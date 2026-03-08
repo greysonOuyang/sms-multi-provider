@@ -9,45 +9,68 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>sms-facade</artifactId>
+    <artifactId>sms-starter</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
+    <name>SMS Multi Provider Starter</name>
+    <description>Spring Boot Starter for SMS Multi Provider</description>
 
     <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
+        <!-- 核心模块 -->
         <dependency>
             <groupId>org.moretea.sms</groupId>
-            <artifactId>sms-api</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <artifactId>sms-facade</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.moretea.sms</groupId>
             <artifactId>sms-service</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.moretea.sms</groupId>
             <artifactId>sms-load-balance</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.moretea.sms</groupId>
+            <artifactId>sms-queue</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- Spring Boot -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- 可选：Actuator 健康检查 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
     </dependencies>
-
 </project>

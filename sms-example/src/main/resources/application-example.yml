@@ -1,0 +1,65 @@
+# SMS Multi Provider 完整配置示例
+sms:
+  # ========== 全局负载均衡配置 ==========
+  load-balance:
+    enabled: true           # 是否启用负载均衡（默认 true）
+    strategy: weighted      # 策略：random（随机）/ round-robin（轮询）/ weighted（加权，默认）
+
+  # ========== 全局重试配置 ==========
+  retry:
+    enabled: true           # 是否启用重试（默认 true）
+    immediate-limit: 3      # 立即重试次数（失败后立即换服务商重试，默认 3）
+    max-retry-times: 10     # 最大重试次数（包括延迟重试，默认 10）
+    fixed-delay: 5000       # 延迟重试间隔（毫秒，默认 5000）
+
+  # ========== 厂商配置 ==========
+  providers:
+    # ----- 阿里云短信 -----
+    aliyun:
+      enabled: true
+      access-key-id: ${ALIYUN_ACCESS_KEY_ID:your-access-key}
+      access-key-secret: ${ALIYUN_ACCESS_KEY_SECRET:your-secret}
+      domain: dysmsapi.aliyuncs.com    # 可选，默认
+      sign-name: 阿里云短信测试         # 短信签名
+      weight: 10                       # 负载均衡权重（越高被选中的概率越大）
+
+    # ----- 天翼云短信 -----
+    ctyun:
+      enabled: true
+      access-key: ${CTYUN_ACCESS_KEY:your-access-key}
+      secret-key: ${CTYUN_SECRET_KEY:your-secret}
+      api-url: https://sms-global.ctapi.ctyun.cn/sms/api/v1/send  # 可选，默认
+      sign-name: 天翼云短信测试
+      weight: 5
+
+---
+# 最小配置示例（单厂商）
+sms:
+  providers:
+    aliyun:
+      access-key-id: xxx
+      access-key-secret: xxx
+      sign-name: 测试签名
+
+---
+# 多厂商 + 负载均衡 + 重试
+sms:
+  load-balance:
+    enabled: true
+    strategy: weighted    # 按权重分配，阿里云 10，天翼云 5，大概 2:1 比例
+  retry:
+    enabled: true
+    immediate-limit: 3    # 失败后立即换厂商重试 3 次
+    max-retry-times: 10   # 总共最多重试 10 次
+    fixed-delay: 5000     # 延迟重试间隔 5 秒
+  providers:
+    aliyun:
+      access-key-id: xxx
+      access-key-secret: xxx
+      sign-name: 阿里云签名
+      weight: 10
+    ctyun:
+      access-key: xxx
+      secret-key: xxx
+      sign-name: 天翼云签名
+      weight: 5
